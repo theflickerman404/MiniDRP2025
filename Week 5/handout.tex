@@ -1,0 +1,190 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+\newcommand{\pref}[1]{\textbf{Proposition~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{defin}{Definition}
+
+\numberwithin{thm}{section}
+\numberwithin{lemma}{section}
+\numberwithin{prop}{section}
+\numberwithin{defin}{section}
+
+\author{Isaac Clark}
+\title{Handout 4}
+
+\begin{document}
+
+\maketitle
+
+\section{Connectedness}
+
+\begin{defin}
+    We say that $\varnothing \ne X \subseteq \reals^n$ is disconnected if there exist $\varnothing \ne A, B \subseteq X$ disjoint, open (in $X$) sets such that $X = A \cup B$. Such $A, B$ are called a disconnection of $X$. Equivalently, $X$ is disconnected if there exists a proper clopen subset of $X$.
+\end{defin}
+
+\begin{defin}
+    We say that $\varnothing \ne X \subseteq \reals^n$ is connected if it is not disconnected.
+\end{defin}
+
+\begin{defin}
+    We say that $\varnothing \ne X \subseteq \reals^n$ is path-connected if for every $x, x' \in X$, there exists a continuous function $f: [0, 1] \to X$ such that $f(0) = x$ and $f(1) = x'$. Such an $f$ is called a path from $x$ to $x'$ in $X$.
+\end{defin}
+
+\begin{thm}\label{[0,1]IsConnected}
+    $[0, 1]$ is connected.
+\end{thm}
+\begin{proof}
+    Suppose, for a contradiction, that $[0, 1]$ is disconnected. Let $A, B \subseteq [0,1]$ be a disconnection of $[0,1]$. We may assume without loss of generality that $0 \in A$. Let $s = \sup A$ and observe that $0 \leq s \leq 1$. So, since $[0, 1] = A \cup B$, either $s \in A$ or $s \in B$. If $s \in A$, then since $A$ is open, there exists some $\varepsilon > 0$ such that $(s - \varepsilon , s + \varepsilon) \subseteq A$. But then $s + \varepsilon/2 \in A$ with $s < s + \varepsilon/2$, contradicting that $s$ is an upper bound of $A$. If $s \in B$, then, since $B$ is open, there exists some $\varepsilon > 0$ such that $(s - \varepsilon , s + \varepsilon) \subseteq B$. But, since $s \in \overline{A}$, there must be some point $a \in A$ such that $a \in (s - \varepsilon, s + \varepsilon)$, contradicting that $A$ and $B$ are disjoint. Hence, $[0, 1]$ is connected.
+\end{proof}
+
+\begin{thm}\label{ContinuousImageOfConnectedIsConnected}
+    Suppose $X \subseteq \reals^n$ is (path-)connected and $f: X \to \reals^m$ is continuous. Then $f(X)$ is (path-)connected.
+\end{thm}
+\begin{proof}
+    Suppose $X$ is path-connected. Given $y, y' \in f(X)$, pick $x, x'$ such that $f(x) = y$ and $f(x') = y'$. Let $\gamma: [0, 1] \to X$ be a path connecting $x$ and $x'$ in $X$. Then, $\gamma' = f \circ \gamma : [0, 1] \to f(X)$ is continuous and satisifes $\gamma'(0) = f(\gamma(0)) = f(x) = y$ and $\gamma'(1) = y'$. Thus, there is a path from $y$ to $y'$ for any $y,y' \in f(X)$, and so $f(X)$ is path-connected.
+
+    For the second part, we will show the contrapositive. Suppose $f(X)$ is disconnected. Let $A, B$ be a disconnection of $f(X)$. Then, consider $f^{-1}(A)$ and $f^{-1}(B)$. Each are open, since $f$ is continuous, they are disjoint, since $A, B$ are disjoint, and their union is $X$, and so they exhibit a disconnection of $X$.
+\end{proof}
+
+\begin{prop}\label{DisconnectionCharacterization}
+    $X$ is disconnected $\iff$ there exists a non-constant, continuous function $f: X \to \{0, 1\}$. Equivalently, $X$ is connected $\iff$ every continuous function $f: X \to \{0, 1\}$ is constant.
+\end{prop}
+\begin{proof}
+    If $f: X \to \{0, 1\}$ is non-constant and continuous, then $f^{-1}(\{0\})$ and $f^{-1}(\{1\})$ are a disconnection of $X$. If $X$ is disconnected, let $A, B$ be a disconnection of $X$, and define $f(x) = \chi_A(x)$, i.e. $f(x) = 1$ if $x \in A$ and $f(x) = 0$ otherwise. Then, one may check that the only open sets in $\{0, 1\}$ are $\varnothing, \{0\} , \{1\}, \{0,1\}$, each of which are, by construction, open in $X$. Since $A \ne X$, $f$ is not constant, and so is as desired.
+\end{proof}
+
+\begin{prop}\label{UnionOfConnected}
+    Let $\{ X_i \}_{i \in I}$ be a family of (path-)connected sets. Then, if we further have that $\bigcap_{i \in I} X_i \ne \varnothing$ then $\bigcup_{i \in I} X_i$ is (path-)connected.
+\end{prop}
+\begin{proof}
+    
+\end{proof}
+
+\begin{thm}\label{PathConnectedImpliesConnected}
+    If $X$ is path-connected, then it is also connected.
+\end{thm}
+\begin{proof}
+    Fix $x_0 \in X$. Then, for each $x \in X$, let $\gamma_x: [0,1]\to X$ be a path from $x_0$ to $x$ in $X$. Then, $\bigcup_{x \in X} \gamma_x([0,1]) \subseteq X$ since each image is contained in $X$. Also, $X \subseteq \gamma_x([0,1])$ since $x \in \gamma_x([0, 1])$ for each $x \in X$. Further, $x_0 \in \gamma_x([0,1])$ for every $x \in X$, and so $\bigcap_{x \in X} \gamma_x ([0,1]) \ne \varnothing$, and, since each $\gamma_x$ is continuous by \tref{ContinuousImageOfConnectedIsConnected} and $[0,1]$ is connected by \tref{[0,1]IsConnected}, $\gamma_x([0,1])$ is connected for each $x \in X$. Taken all together, by \pref{UnionOfConnected}, $X = \bigcup_{x \in X} \gamma_x([0,1])$ is connected.
+\end{proof}
+
+\begin{thm}
+    There exists $X \subseteq \reals^2$ such that $X$ is connected but not path-connected.
+\end{thm}
+\begin{proof}
+    Let $X = \{ (x, \sin (1/x)) \ | \ x > 0 \} \cup \{ (0, 0) \}$.
+\end{proof}
+
+\begin{thm}
+    If $X, Y$ are (path-)connected then $X \times Y$ is (path-)connected.
+\end{thm}
+
+\begin{thm}
+    If $X$ is connected and $X \subseteq Y \subseteq \overline{X}$ then $Y$ is connected.
+\end{thm}
+
+\begin{prop}
+    The following are (path-)connected: \begin{enumerate}
+        \item Intervals (i.e. $(a, b), [a, b)$, etc.).
+        \item Rays (i.e. $(a, \infty)$, etc.).
+        \item $\reals^n$.
+        \item $B_r(x)$.
+    \end{enumerate}
+\end{prop}
+
+\begin{defin}
+    We say that $\varnothing \ne X \subseteq \reals^n$ is totally disconnected if the only connected subsets of $X$ are the singletons.
+\end{defin}
+
+\begin{prop}
+    The following are totally disconnected: \begin{enumerate}
+        \item Discrete sets.
+        \item $\q$.
+        \item The Cantor set, see Handout 1.
+    \end{enumerate}
+\end{prop}
+
+\begin{defin}
+    We say that $C \subseteq \reals^n$ is convex if for all $a, b \in C$, we have that $(1 - t)a + tb \in C$ for every $t \in [0, 1]$.
+\end{defin}
+
+\begin{thm}
+    Suppose $X \subseteq \reals$. Then the following are equivalent, \begin{enumerate}
+        \item $X$ is connected.
+        \item $X$ is convex.
+        \item $X$ is path-connected.
+    \end{enumerate}
+\end{thm}
+
+\textbf{Corollary}. If $f: X \to \reals$ is continuous and $X$ is connected then $f$ attains all values between any two points in the image, i.e. the Intermediate Value theorem.
+
+\begin{defin}
+    We say that $f: X \to \reals^n$ is locally constant if for any $x \in X$, there is an open neighbourhood of $X$, say $U$, on which $f$ is constant.
+\end{defin}
+
+\begin{prop}
+    If $f: X \to \reals^n$ is locally constant and $X$ is connected, then $f$ is constant.
+\end{prop}
+
+\end{document}
