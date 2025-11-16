@@ -1,0 +1,166 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{problem}{Problem}
+
+\author{Isaac Clark}
+\title{Problem Set 1}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Suppose $x, y, z \in \reals^n$ and $\lambda \in \reals$. Show that, \begin{enumerate}[label=(\alph*)]
+        \item $(\lambda x + y) \cdot z = \lambda x \cdot z + y \cdot z$.
+        \item $x \cdot y = y \cdot x$.
+        \item $x \cdot x = 0 \iff x = 0$.
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    \textbf{(Generalized parallelogram law)} Fix $k \in \nats$. Let $\{-1, 1\}^k$ be the set of all $k$-tuples of $\{-1, 1\}$. Show that, for any $x_0, x_1, ..., x_k \in \reals^n$, we have, \begin{equation*}
+        \sum_{a \in \{-1, 1\}^k} \left| x_0 + \sum_{i = 1}^k a_ix_i \right|^2 = 2^k \sum_{i = 0}^k |x_i|^2
+    \end{equation*}
+    Hint: You only need to ``expand out'' the $k = 1$ case.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    \textbf{(Reverse triangle inequality)} Show that, for any $x, y \in \reals^n$, \begin{equation*} \big| |x| - |y| \big| \leq |x - y|\end{equation*} Deduce that the map $\nu(x) = |x|$ is continuous.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Fix $x \in \reals^n$. Show that the map $f(y) = y \cdot x$ is bounded, i.e. find some $A \in \reals$ such that $|f(y)| \leq A|y|$ for all $y \in \reals^n$. Deduce that $f$ is continuous.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{x_n\}_{n \in \nats} \subseteq \reals$ is a sequence of positive real numbers. Show that, \begin{equation*}
+        \lim_{n \to \infty} x_n = \infty \iff \lim_{n \to \infty} x_n^{-1} = 0
+    \end{equation*}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    \textbf{(How $\nats$ sits in $\reals$)} Recall: the supremum axiom says that if $A \subseteq \reals$ is non-empty and bounded, then there exists a least upper bound of $A$, called $\sup (A)$. Assuming this for now, show that, \begin{enumerate}
+        \item (Archimedian property of $\reals$) For all $x \in \reals$, there exists $n \in \nats$ such that $x < n$.
+        \item Find an appropriate definition of $\lfloor x \rfloor$ for $x \geq 0$ in terms of the supremum. 
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{a_n\}_{n\in\nats}, \{b_n\}_{n\in\nats} \subseteq \reals$ are sequences such that, for all $n \in \nats$, \begin{equation*}
+        a_n \leq a_{n+1} \leq b_{n+1} \leq b_n
+    \end{equation*} Define, for each $n \in \nats$, $I_n = [a_n, b_n]$. Show that $\varnothing \ne \bigcap_{n = 0}^{\infty} I_n$, i.e. that there exists some $x \in \reals$ such that $x\in I_n$ for all $n \in \nats$.
+
+    Hint: Consider $\lim_{n \to \infty} a_n$ and $\lim_{n \to \infty} b_n$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Fix sets $I$, $A$, and $B$. For each $i \in I$, let $A_i \subseteq A$ and $B_i \subseteq B$ be subsets. We define $\bigcup_{i \in I} A_i = \{ a \in A \ : \ \exists i \in I , \ a \in A_i \}$. Similarly, we can also define, $\bigcap_{i \in I} A_i = \{ a \in A \ : \ \forall i \in I, \ a \in I_i\}$. Let $f: A \to B$ be a function. Show that, \begin{enumerate}[label=(\alph*)]
+        \item For any set $C$, we have $C \cap \left( \bigcup_{i \in I} A_i \right) = \bigcup_{i \in I} \big( C \cap A_i \big)$.
+        \item For any set $C$, we have $C \cup \left( \bigcap_{i \in I} A_i \right) = \bigcap_{i \in I} \big( C \cup A_i \big)$.
+        \item For any set $C$, we have $C \setminus \left( \bigcup_{i \in I} A_i \right) = \bigcap_{i \in I} \big( C \setminus A_i \big)$.
+        \item For any set $C$, we have $C \setminus \left( \bigcap_{i \in I} A_i \right) = \bigcup_{i \in I} \big( C \setminus A_i \big)$.
+        \item For any $i \in I$, $A_i \subseteq f^{-1}(f(A_i))$, with equality if $f$ is injective.
+        \item For any $i \in I$, $B_i \subseteq f(f^{-1}(B_i))$, with equality if $f$ is surjective.
+        \item $f^{-1} \left( \bigcup_{i \in I} B_i \right) = \bigcup_{i \in I} f^{-1}(B_i)$.
+        \item $f^{-1} \left( \bigcap_{i \in I} B_i \right) = \bigcap_{i \in I} f^{-1}(B_i)$.
+        \item $f \left( \bigcup_{i \in I} A_i \right) = \bigcup_{i \in I} f(A_i)$.
+        \item $f \left( \bigcap_{i \in I} A_i \right) \subseteq \bigcap_{i \in I} f(A_i)$, with equality if $f$ is injective.
+        \item Find, and prove, similar statements for subsets and set differences. What do you notice about the statements for images versus those for pre-images?
+    \end{enumerate}
+\end{problem} \newpage
+
+\begin{problem}
+    Let $A, B, C$ be sets. Prove or disprove the following, \begin{enumerate}[label=(\alph*)]
+        \item $A \subseteq B$ and $A \subseteq C \iff A \subseteq (B \cup C)$.
+        \item $A \subseteq B$ or $A \subseteq C \iff A \subseteq (B \cup C)$.
+        \item $A \subseteq B$ and $A \subseteq C \iff A \subseteq (B \cap C)$.
+        \item $A \subseteq B$ or $A \subseteq C \iff A \subseteq (B \cap C)$.
+        \item $A \setminus (A \setminus B) = B$.
+        \item $A \setminus (B \setminus A) = A \setminus B$.
+        \item $(A \cap B) \cup (A \setminus B) = A$.
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{ x_n \}_{n\in\nats} \subseteq \reals$ is a convergent sequence. Show that, for all $\varepsilon > 0$ there exists an $N \in \nats$ such that if $n, m \geq N$ then $|x_n - x_m| < \varepsilon$.
+
+    Hint: A $\varepsilon/2$ will probably appear.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq \reals$ is a sequence. Recall: \begin{align*}
+        \limsup_{n \to \infty} x_n &:= \lim_{n \to \infty} \sup_{k \geq n} x_k \\
+        \liminf_{n \to \infty} x_n &:= \lim_{n \to \infty} \inf_{k \geq n} x_k
+    \end{align*}
+    Show that, if $\{x_n\}_{n \in \nats}$ is bounded, then $\limsup_{n \to \infty} x_n$ and $\liminf_{n \to \infty}x_n$ exist, and that \begin{equation*}
+        \liminf_{n \to \infty} x_n \leq \limsup_{n \to \infty} x_n
+    \end{equation*} With equality if and only if $\lim_{n \to \infty} x_n$ exists; in which case, each is equal to the limit.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq \reals$ is a bounded sequence. Define a new sequence $\{c_n\}_{n \in \nats} \subseteq \reals$ by $c_n := \big(\sum_{k = 0}^n x_k \big)/n$, the ``Cesàro sums'' of the $x_n$. Show that, \begin{equation*}
+        \liminf_{n \to \infty} x_n \leq \liminf_{n \to \infty} c_n \leq \limsup_{n \to \infty} c_n \leq \limsup_{n \to \infty} x_n
+    \end{equation*} Deduce that if $\lim_{n \to \infty} x_n$ exists, then $\lim_{n \to \infty} c_n$ exists and $\lim_{n \to \infty} c_n = \lim_{n \to \infty} x_n$. Also show that, while the sequence $x_n = (-1)^n$ doesn't converge, the Cesàro sums converge to $0$. If you're up to it (i.e. this is a very hard problem), try to find a sequence whose Cesàro sums don't converge.
+\end{problem}
+
+\end{document}
