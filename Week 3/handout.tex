@@ -1,0 +1,369 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+\newcommand{\disk}{\mathbb{D}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+\newcommand{\pref}[1]{\textbf{Proposition~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{defin}{Definition}
+
+\numberwithin{thm}{section}
+\numberwithin{lemma}{section}
+\numberwithin{prop}{section}
+\numberwithin{defin}{section}
+
+\author{Isaac Clark}
+\title{Handout 2}
+
+\begin{document}
+
+\maketitle
+
+It will be convenient to introduce a bit of nomenclature. We say that $U \subseteq \reals^n$ is an open neighbourhood of $x \in \reals^n$ if $U$ is open and $x \in U$. We begin with a few prepatory results.
+
+\begin{lemma}\label{ClosurePreservesSubsets}
+    If $A \subseteq B \subseteq \reals^n$, then $\overline{A} \subseteq \overline{B}$.
+\end{lemma}
+\begin{proof}
+    Per Handout 1, $x \in \overline{A}$ if and only if every open neighbourhood of $x$ intersects $A$ non-trivially, i.e. $\exists a \in A \cap U$ for all $U$ an open neighbourhood of $x$. But then $a \in A$ implies $a \in B$ and so $\exists a \in B \cap U$ for all $U$ an open neighbourhood of $x$, and so $x \in \overline{B}$, again per Handout 1. Hence $\overline{A} \subseteq \overline{B}$.
+\end{proof}
+
+\begin{prop}\label{FiniteAreClosed}
+    If $|A| < \infty$ then $A$ is closed.
+\end{prop}
+\begin{proof}
+    We proceed by induction on $|A|$. If $|A| = 0$ then $A = \varnothing$ and we are done. If $|A| = 1$, then $A = \{a \}$ for some $a$. Now suppose $y \in \reals^n \setminus A$. Then $y \ne a$, so $||y-a|| > 0$, and so, putting $\varepsilon = ||y-a||/2$, we have that $U = B_{\varepsilon}(y)$ is an open neighbourhood of $y$ which does not contain $a$, so $U \cap A = \varnothing$, so $U \subseteq \reals^n \setminus A$. This exhibits $\reals^n \setminus A$ as open, and thus $A$ as closed. Now suppose that every $A$ with $|A| \leq k$ for some $k \in \ints^+$ is closed. Then, if $|A| = k + 1$, we may write $A = B \cup \{a\}$, for some $|B| = k$. Then, by the inductive hypothesis, $B$ and $\{a \}$ are closed, so $A$ is the finite union of closed, which is closed per Handout 1. This completes the inductive step and thus the proof.
+\end{proof}
+
+\section{Limit points}
+
+Suppose $A \subseteq \reals^n$.
+
+\begin{defin}
+    We say that $x \in \reals^n$ is a limit point of $A$ if every open neighbourhood of $x$ intersects $A$ at a point other than itself.
+\end{defin}
+
+\begin{prop}\label{LimitPointCharacterization}
+    $x$ is a limit point of $A$ if and only if $x \in \overline{A \setminus \{x \}}$.
+\end{prop}
+\begin{proof}
+    Per Handout 1, $x \in \overline{A \setminus \{x\}}$ if and only if every open neighbourhood of $x$ intersects $A \setminus \{x\}$, but this means that every open neighbourhood intersects $A$ at a point other than itself.
+\end{proof}
+
+\begin{thm}\label{ClosureIsSetPlusLimitPoints}
+    Let $A'$ be the set of all limit points of $A$. Then, $\overline{A} = A \cup A'$.
+\end{thm}
+\begin{proof}
+    ``$\subseteq$'' Suppose $x \in \overline{A}$. If $x \in A$, then $x \in A \cup A'$, and we are done. If $x \not\in A$, then $A \setminus \{x\} = A$, and so, per \pref{LimitPointCharacterization}, since $x \in \overline{A} = \overline{A \setminus \{x\}}$, we have that $x \in A'$, and so $x \in A \cup A'$. In either case, we have that $x \in A \cup A'$.
+
+    ``$\supseteq$'' Suppose $x \in A \cup A'$. If $x \in A$, then, since per Handout 1, $A \subseteq \overline{A}$, we have $x \in \overline{A}$. If $x \in A'$, then per \pref{LimitPointCharacterization}, $x \in \overline{A \setminus \{x\} }$. But $A \setminus \{x\} \subseteq A$, so by \lref{ClosurePreservesSubsets}, $\overline{A \setminus \{x \}} \subseteq \overline{A}$, and so $x \in \overline{A}$. In either case, we have that $x \in \overline{A}$.
+
+    Taking ``$\subseteq$'' and ``$\supseteq$'' together, we have set equality, and thus the claim.
+\end{proof}
+
+\begin{prop}\label{ExamplesOfLimitPoints}
+    $0 \in \reals$ is: \begin{enumerate}[label=(\alph*)]
+        \item NOT a limit point of $\{ 0 \}$.
+        \item a limit point of $[0, 1]$.
+        \item NOT a limit point of $[1, \infty)$.
+        \item a limit point of $\q$.
+        \item NOT a limit point of $\ints$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    Per \pref{LimitPointCharacterization}, $x$ is a limit point of $\{0 \}$ if and only if $x \in \overline{\{0\} \setminus \{x\}}$. But $\{0 \} \setminus \{x\}$ is either $\varnothing$, if $x = 0$, or $\{0 \}$, if $x \ne 0$. In particular, for $x=0$, $\overline{\{0 \} \setminus \{0\}} = \varnothing$, which does not contain $0$, so $0$ is not a limit point of $\{0\}$. Hence (a). In fact, $\{ 0 \}$ contains no limit points.
+
+    For (b) and (d), consider that every $U$ an open neighbourhood of $0$ contains $B_{1/n}(0)$ for some $n \in \ints^+$, which contains, in particular $1/2n$, which is a member of $[0, 1]$ and $\q$, and so by definition $0$ is a limit point of $[0,1]$ and $\q$. Hence (b) and (d).
+
+    For (c) and (e), put $U = B_{1/2}(0)$. Then, $U$ is an open neighbourhood of $0$, but if $y \in B_{1/2}(0)$ then $|y| < 1/2$, but no integer besides $0$ or element of $[1, \infty)$ satisfies this, whence $0 \not\in \overline{\ints \setminus \{0\} }$ and $0 \not\in \overline{[1, \infty) \setminus \{0 \}}$, so $0$ is not a limit point of $\ints$ nor $[1, \infty)$, per \pref{LimitPointCharacterization}.
+\end{proof}
+
+\begin{prop}
+    $A$ is closed if and only if $A' \subseteq A$.
+\end{prop}
+\begin{proof}
+    Per Handout 1, $A$ is closed if and only if $A = \overline{A}$. Per \tref{ClosureIsSetPlusLimitPoints}, $\overline{A} = A \cup A'$. So $A$ is closed if and only if $A = A \cup A'$ if and only if $A' \subseteq A$.
+\end{proof}
+
+\begin{thm}
+    $x$ is a limit point of $A$ if and only if every open neighbourhood of $x$ contains infinitely many points of $A$.
+\end{thm}
+\begin{proof}
+    If an open neighbourhood of $x$ contains infinitely many points of $A$, then it certainly contains a point of $A$ other than $x$, and so, since this criteria is satsified for all open neighbourhoods of $x$, we have that $x$ is a limit point of $A$.
+
+    Conversely, suppose for a contradiction that $x$ is a limit point of $A$ such that there is an open neighbourhood of $x$, say $U$, which only contains finitely many points of $A$. Then $U$ only contains finitely many points of $A \setminus \{x\}$. Write $\{x_1, ..., x_m\} = U \cap (A \setminus \{x\})$. Then, $\reals^n \setminus \{x_1, ..., x_m\}$ is the compliment of a closed set by \lref{FiniteAreClosed}, and so is open. But then $U \cap (\reals^n \setminus \{x_1, ..., x_m\})$ is an open (as the finite intersection of open, per Handout 1) neighbourhood of $x$ (as $x \in U$ and $x \ne x_i$ for each $i$) which contains no points of $A \setminus \{x\}$, which contradicts that $x \in \overline{\reals^n \setminus \{x \}}$, and thus that $x$ is a limit point of $A$, per \pref{LimitPointCharacterization}. So, every open neighbourhood of a limit point contains infinitely many points of $A$.
+\end{proof}
+
+\section{Sequences, revisited}
+
+One may notice that up until now, we have primarily considered constructions that make use of the normed vector space structure of $\reals^n$, without paying much mind to underlying structure of $\reals$ itself. This begs the question as to why we are considering $\reals^n$ at all, instead of $\q^n$, which enjoys many of the same properties, i.e. it is a vector space (over $\q$) and can be endowed with a norm in the same way $\reals^n$ is. There are a number of reasons to work with $\reals^n$ instead of $\q^n$, perhaps the most elementary reason is that the class of convergent sequences in $\q$ is very small; a notion we seek in this section to (among other things) formalize.
+
+\begin{defin}
+    A metric on a set $X$ is a function $d: X \times X \to \reals$ satisfying: \begin{enumerate}
+        \item For all $x, y \in X$, $d(x, y) \geq 0$, with equality if and only if $x = y$.
+        \item For all $x, y \in X$, $d(x,y) = d(y, x)$.
+        \item For all $x, y, z \in X$, $d(x, y) \leq d(x, z) + d(z, y)$.
+    \end{enumerate}
+\end{defin}
+
+\textit{Remark}. A pair $(X, d)$ of a set and a metric on the set $X$ is called a metric space.
+
+\begin{defin}
+    Suppose $\{ x_n \}_{n \in \nats} \subseteq X$ is a sequence in $X$ (i.e. a map from $\nats$ to $X$). Then, we say that $x_n$ converges to $x$ for $x \in X$, if for all $\varepsilon > 0$, there exists some $N \in \nats$ such that $n \geq N$ implies $d(x, x_n) < \varepsilon$. In this case we often write $x_n \to x$.
+\end{defin} \vspace{10pt}
+
+\textit{Remark}. If $X = \reals^n$ and $d(x, y) = ||x - y||$ then one can check that $d$ is a metric, and then \textbf{Definition 2.2} is precisely the $\varepsilon-N$ definition of convergence. \vspace{10pt}
+
+\textit{Remark}. Importantly, we require the limit of a convergent sequence in $X$ to lie in $X$. \vspace{10pt}
+
+\begin{defin}
+    Suppose $\{ x_n\}_{n\in\nats} \subseteq X$ is a sequence. We say that $\{x_n\}_{n\in\nats}$ is Cauchy if for all $\varepsilon > 0$ there exists some $N \in \nats$ such that for all $n,m\geq N$, $d(x_n, x_m) < \varepsilon$.
+\end{defin} \vspace{10pt}
+
+\begin{prop}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq X$ converges. Then $\{x_n\}_{n\in\nats}$ is Cauchy.
+\end{prop}
+\begin{proof}
+    Essentially the same as Eitan's proof for the case of $\reals$.
+\end{proof} \vspace{10pt}
+
+\begin{defin}
+    We say $X$ is complete if every Cauchy sequence in $X$ converges.
+\end{defin} \vspace{10pt}
+
+\begin{prop}\label{QIsNotComplete}
+    $\q$ is not complete under the metric $d(x, y) = |x-y|$.
+\end{prop}
+\begin{proof}
+    Put $x_0 = 2$. For $n \geq 0$, put $x_{n+1} = \big(x_n + 2/x_n \big)/2$. By induction, we have that each $x_n \in \q$. Suppose $\lim_{n \to \infty} x_n$ exists, and put $x := \lim_{n \to \infty} x_n$. Then, \begin{align*}
+        x = \lim_{n \to \infty} x_{n + 1} = \lim_{n \to \infty} \frac{1}{2} \left( x_n + \frac{2}{x_n} \right) = \frac{1}{2} \left( \lim_{n \to \infty}x_n + \frac{2}{\lim_{n \to \infty} x_n} \right) = \frac{1}{2} \left( x + \frac{2}{x} \right)
+    \end{align*} Rearranging we have $x^2 = 2$, but no rational number squares to $2$, so $\{x_n\}_{n\in\nats}$ does not converge in $\q$. 
+    
+    However, we may observe that, by AM-GM, \begin{equation*}
+        x_{n+1} = \frac{1}{2} \left( x_n + \frac{2}{x_n} \right) \geq \sqrt{x_n \frac{2}{x_n}} = \sqrt{2}
+    \end{equation*} And so $x_n \geq \sqrt{2}$ for all $n \in \nats$. Further, \begin{equation*}
+        x_{n+1} - x_n = \frac{1}{2} \left( x_n + \frac{2}{x_n} \right) - x_n = \frac{2 - x_n^2}{2x_n} \leq \frac{2 - (\sqrt{2})^2}{2x_n} = 0
+    \end{equation*} So $x_{n+1} \leq x_n$, whence $\{x_n\}_{n\in\nats}$ is a monotone-decreasing sequence which is bounded below, so by the Monotone Convergence theorem, we have that $\{x_n\}_{n\in\nats}$ converges. Thus, since convergent implies Cauchy, we have that the $\{x_n\}_{n\in\nats}$ is Cauchy. Thus, there exists a Cauchy sequence in $\q$ which does not converge in $\q$. Hence $\q$ is not complete.
+\end{proof}
+
+\textit{Remark}. The procedure in the proof of \pref{QIsNotComplete} is called the Newton-Heron algorithm, and can be used more generally to construct sequences which converge to a root, $r$, of a twice continuously differentiable function, $f$, under the condition that $f'(r) \ne 0$, and $x_0$ is sufficiently close to $r$.
+
+\begin{prop}
+    $(0, 1)$ is not complete under the metric $d(x, y) = |x - y|$.
+\end{prop}
+\begin{proof}
+    Put $x_n = (n+2)^{-1}$ for each $n \in \nats$. Then, $x_n \in (0, 1)$ for each $n$. Suppose that $\{x_n\}_{n\in\nats}$ converges in $(0, 1)$, and put $x = \lim_{n \to \infty} x_n$. Since the $x_n$ are strictly decreasing, the limit must be less than or equal to all of the $x_n = (n+2)^{-1}$. Then, if $x \in (0, 1)$ then $x^{-1} \in \reals$ and so there exists some $m \in \nats$ such that $x^{-1} < m$. But then $m^{-1} < x$, a contradiction. Thus, $\{x_n\}_{n\in\nats}$ does not converge in $(0, 1)$. However, for $\varepsilon > 0$, $2\varepsilon^{-1} \in \reals$, and so there exists some $N \in \nats$ such that $2 \varepsilon^{-1} < N$, but then $N^{-1} < \varepsilon/2$, and so for $n, m \geq N$, $|n^{-1} - m^{-1}| \leq n^{-1} + m^{-1} \leq 2 N^{-1} < \varepsilon$, so $\{x_n\}_{n\in\nats}$ is Cauchy in $(0, 1)$. Hence, there is a Cauchy sequence in $(0,1)$ which does not converge in $(0, 1)$, and so $(0,1)$ is not complete.
+\end{proof}
+
+We now move to prove that $\reals$ is complete, which we will deduce using the Monotone Convergence Theorem, which in turn comes from the Supremum Axiom. This will essentially say that the broadest class of sequences in $\reals$ converge (since every convergent sequence is Cauchy, the class of convergent sequences is a subset of the Cauchy sequences). There are other ways to deduce the completeness of $\reals$ using alternate constructions, which we may explore later on, time permitting. \vspace{10pt}
+
+\begin{lemma}\label{LimitsPreserveOrder}
+    Suppose $\{x_n\}_{n\in\nats}, \{y_n\}_{n\in\nats} \subseteq \reals$ are convergent sequences which satisfy $x_n \leq y_n$ for all $n \in \nats$. Then, $\lim_{n\to\infty} x_n \leq \lim_{n\to\infty} y_n$.
+\end{lemma}
+\begin{proof}
+    Let $\varepsilon > 0$ be arbitrary. Then, since $\{x_n\}_{n\in\nats}$ and $\{y_n\}_{n\in\nats}$ are convergent, say $x = \lim_{n\to\infty} x_n$ and $y = \lim_{n\to\infty} y_n$, there exist $N_1, N_2 \in \nats$ such that for all $n \geq N_1$ $|x_n - x| < \varepsilon$ and for all $n \geq N_1$, $|y_n - y| < \varepsilon$. Then, for all $n \geq N = \max \{N_1, N_2 \}$, we have $x - \varepsilon < x_n < x + \varepsilon$ and $y - \varepsilon < y_n < y + \varepsilon$. Then, \begin{equation*}
+        x < x_n + \varepsilon \leq y_n + \varepsilon < y + 2 \varepsilon
+    \end{equation*} for all $\varepsilon > 0$. In particular, if $x > y$, then $(x-y)/2 > 0$, and so putting $\varepsilon = (x-y)/2$, \begin{equation*}
+        x < y + 2 \varepsilon = y + (x - y) = x
+    \end{equation*} A contradiction. Hence $x \leq y$, which finishes the proof.
+\end{proof}
+
+\begin{defin}
+    Let $\{x_n\}_{n\in\nats} \subseteq \reals$ be a bounded sequence. We define, \begin{align*}
+        \limsup_{n\to\infty} x_n &:= \lim_{n\to\infty} \sup_{k \geq n} \ x_k \\
+        \liminf_{n\to\infty} x_n &:= \lim_{n\to\infty} \inf_{k \geq n} \ x_k
+    \end{align*}
+\end{defin}
+
+\begin{prop}\label{LimSupLimInfInequality}
+    $\limsup$ and $\liminf$ are well-defined. And, \begin{equation*}
+        \liminf_{n\to\infty} x_n \leq \limsup_{n\to\infty} x_n
+    \end{equation*} Further, if $\{x_n\}_{n\in\nats}$ converges, then, \begin{equation*}
+        \liminf_{n\to\infty} x_n = \lim_{n\to\infty} x_n = \limsup_{n\to\infty} x_n
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Since $\{x_n\}_{n\in\nats}$ is bounded, say $|x_n| \leq M$, any subset of it is also bounded, and so, in particular $\sup_{k\geq n} x_k$ and $\inf_{k \geq n} x_k$ each exist for all $k \in \nats$. Moreover, \begin{equation*}
+        -M \leq \inf_{k\geq n} x_k \leq \inf_{k \geq n+1} x_k \leq x_{n+1} \leq \sup_{k\geq n+1} x_k \leq \sup_{k\geq n} x_k \leq M
+    \end{equation*} In particular, $y_n = \sup_{k\geq n} x_k$ is a monotone decreasing sequence which is bounded below by $-M$, and $z_n = \inf_{k \geq n} x_k$ is a monotone increasing sequence which is bounded above by $M$, whence, by the Monotone Convergence theorem, we have that $\{y_n\}_{n\in\nats}$ and $\{z_n\}_{n\in\nats}$ converge, and thus that the $\limsup$ and $\liminf$ exist. Finally, since $\inf_{k \geq n} x_k \leq \sup_{k \geq n} x_k$ for all $n \in \nats$, by \lref{LimitsPreserveOrder}, we have $\liminf_{n\to\infty} x_n \leq \limsup_{n\to\infty}x_n$.
+
+    Now suppose that $\lim_{n \to \infty} x_n$ exists and put $L = \lim_{n\to\infty}x_n$. Let $\varepsilon > 0$ be given. Then, by definition, there exists some $N \in \nats$ such that $|x_n-L|<\varepsilon$ for all $n \geq N$. Rearranging, we have, $L - \varepsilon < x_n < L + \varepsilon$ for all $n \geq N$. In particular, \begin{equation*}
+        L - \varepsilon < \inf_{k\geq n} x_k \leq \sup_{k\geq n} x_k < L + \varepsilon
+    \end{equation*} for any $n\geq N$. Thus, for any $n \geq N$, \begin{equation*}
+        \left| L - \inf_{k\geq n} x_k \right| < \varepsilon \hspace{1.5cm} \left| L - \sup_{k \geq n} x_k \right| < \varepsilon
+    \end{equation*} And so $\liminf_{n\to\infty} x_n = L = \limsup_{n\to\infty}$, which finishes the proof.
+\end{proof}
+
+\begin{lemma}\label{SqueezeThm}
+    Suppose $\{x_n\}_{n\in\nats}, \{y_n\}_{n\in\nats}, \{z_n\}_{n\in\nats} \subseteq \reals$ are sequences such that $\{x_n\}_{n\in\nats}$ and $\{z_n\}_{n\in\nats}$ converge, $\lim_{n\to\infty} x_n = \lim_{n\to\infty} z_n$, and $x_n \leq y_n \leq z_n$ for all $n\in\nats$. Then, $\{y_n\}_{n\in\nats}$ converges, and \begin{equation*}
+        \lim_{n\to \infty} x_n = \lim_{n \to \infty} y_n = \lim_{n\to\infty} z_n
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Put $L = \lim_{n\to\infty} x_n = \lim_{n\to\infty} z_n$. Then, for given $\varepsilon > 0$, there exists some $N_1, N_2 \in \nats$ such that for all $n \geq N_1$, $|x_n - L| < \varepsilon$ and for all $n \geq N_2$, $|z_n - L|<\varepsilon$. Then, for $n \geq N = \max \{N_1, N_2 \}$, we have, \begin{equation*}
+        L - \varepsilon < x_n \leq y_n \leq z_n < L + \varepsilon
+    \end{equation*} Thus, the $y_n$ are convergent and $\lim_{n\to\infty} y_n = L$.
+\end{proof}
+
+\begin{thm}\label{RIsComplete}
+    $\reals$ is complete.
+\end{thm}
+\begin{proof}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq \reals$ is Cauchy. By definition, there exists some $N \in \nats$ such that $|x_n - x_m| < 1$ for all $n,m\geq N$. In particular, \begin{equation*}
+        |x_n| - |x_N| \leq \big| |x_n| - |x_N| \big| \leq |x_n - x_N| < 1
+    \end{equation*} And so $|x_n| < |x_N| + 1$ for all $n \geq N$. Thus, $|x_n| \leq \max \{ |x_1|, ..., |x_{N-1}|, |x_N| +1\}$. So the $\{x_n\}_{n\in\nats}$ are bounded. Thus, by \pref{LimSupLimInfInequality}, we have that $\liminf_{n\to\infty} x_n$ and $\limsup_{n\to\infty} x_n$ exist. Now, since $\{x_n\}_{n\in\nats}$ is Cauchy, given $\varepsilon > 0$, there exists some $N \in \nats$ such that, for all $k\geq n \geq N$, we have $x_n - \varepsilon < x_k < x_n + \varepsilon$. Then, \begin{equation*}
+        x_n - \varepsilon \leq \inf_{k\geq n} x_k \hspace{1.5cm} \sup_{k \geq n} x_k \leq x_n + \varepsilon
+    \end{equation*} And so, $\sup_{k\geq n} x_k - \inf_{k\geq n} x_k \leq 2 \varepsilon$. Whence $\limsup_{n\to\infty} x_n = \liminf_{n\to\infty} x_n$. Then, since $\inf_{k\geq n} x_k \leq x_n \leq \sup_{k\geq n} x_k$, by \lref{SqueezeThm}, we have that the $\{x_n \}_{n \in \nats}$ are convergent. Thus, every Cauchy sequence is convergent. Hence $\reals$ is complete.
+\end{proof}
+
+\textit{Remark}. Notice that the proof of \tref{RIsComplete} and its constituent parts heavily uses the Monotone Convergence theorem, which is essentially a rebranding of the Supremum Axiom. In fact, if one instead assumes that $\reals$ satisfies the Monotone Convergence theorem, then one is able to deduce the Supremum Axiom handily. Further, where this breaks down for $\q$ is that not every set of rationals has a least upper bound, our example corresponds to the set $\{ q \in \q \ | \ q^2 < 2 \}$ having no least upper bound in $\q$. \newpage
+
+\begin{thm}\label{RdIsComplete}
+    $\reals^d$, under $d(x, y) = ||x-y||$, is complete.
+\end{thm}
+\begin{proof}
+    Suppose $\{ x_n \}_{n\in\nats} \subseteq \reals^d$ is Cauchy. Let $\delta > 0$ be arbitrary. Then, pick $N \in \nats$ such that $||x_n-x_m||<\delta$ for all $n,m \geq N$. Then, as was shown in PS2Q10, we have $|\pi_i(x_n - x_m)| \leq ||x_n-x_m||_{\infty} \leq ||x_n-x_m|| < \delta$ for all $n,m\geq N$ and for each $1 \leq i \leq d$, where $\pi_i$ is the map which sends a vector to its $i$-th component. Thus, each $\{\pi_i(x_n)\}_{n\in\nats} \subseteq \reals$ is a Cauchy sequence in $\reals$, and so by \tref{RIsComplete} each converge to some $a_i \in \reals$. Let $\varepsilon > 0$ be given. Then, for each $1 \leq i \leq d$, there exists some $N_i$ such that $| \pi_i(x_n) - a_i| < \varepsilon/\sqrt{d}$. Let $a = (a_1,..,a_d)$. Now, for $n \geq N = \max \{ N_1, ..., N_d \}$,  \begin{equation*}
+        ||x_n - a||^2 = \sum_{i=1}^d |\pi_i(x_n) - a_i|^2 < \sum_{i = 1}^d \frac{\varepsilon^2}{d} = \varepsilon^2
+    \end{equation*} And so $||x_n - a|| < \varepsilon$, whence $\lim_{n\to\infty} x_n = a$, and every Cauchy sequence in $\reals^d$ converges. Hence $\reals^d$ is complete.
+\end{proof}
+
+\begin{prop}\label{ClosedSubsetSequencesLemma}
+    Let $C \subseteq \reals^d$ be closed. Suppose $\{x_n\}_{n\in\nats} \subseteq C$ is a sequence in $C$ which converges to some $x \in \reals^d$. Then, $x \in C$.
+\end{prop}
+\begin{proof}
+    Since $C$ is closed, $U = \reals^d \setminus C$ is open. Suppose, for a contradiction, that $x \not\in C$, then $x \in U$, and so there exists some $\varepsilon > 0$ such that $B_{\varepsilon}(x) \subseteq U$. But then, $B_{\varepsilon}(x) \cap C = \varnothing$, and so $||x_n - x|| \geq \varepsilon$ for all $n \in \nats$, but then there does not exist an $N \in \nats$ such that $||x_n - x|| < \varepsilon$ for all $n\geq N$, and so $x \ne \lim_{n\to\infty} x_n$, a contradiction. Thus, $x \in C$.
+\end{proof}
+
+\begin{prop}\label{ClosedSubsetOfCompleteIsComplete}
+    If $C \subseteq \reals^d$ is closed, then $C$ is complete.
+\end{prop}
+\begin{proof}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq C$ is Cauchy, then by \tref{RdIsComplete} we have that $\{x_n\}_{n\in\nats}$ converges to some $x \in \reals^n$. By \pref{ClosedSubsetSequencesLemma}, $x \in C$, whence every Cauchy sequence in $C$ converges in $C$. Hence $C$ is complete.
+\end{proof}
+
+\begin{thm}\label{SequentialClosureIsClosure}
+    Suppose $A \subseteq \reals^d$ and $\{x_n\}_{n \in \nats} \subseteq A$ converges. Then, $\lim_{n\to\infty} x_n \in \overline{A}$. Moreover, if $y \in \overline{A}$, then there exists a sequence $\{y_n\}_{n\in\nats} \subseteq A$ which converges to $y$.
+\end{thm}
+\begin{proof}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq A$ converges to some $x \in \reals^d$. Now, given $\varepsilon > 0$, there exists some $N \in \nats$ such that $n \geq N$ implies $||x_n -x|| < \varepsilon$, i.e. $B_{\varepsilon}(x) \cap A \ne \varnothing$ for all $\varepsilon > 0$. Since every open neighbourhood of $x$ contains $B_{\varepsilon}(x)$ for some $\varepsilon > 0$, every open neighbourhood of $x$ intersects $A$ nontrivially, whence, per Handout 1, $x \in \overline{A}$.
+
+    On the other hand, suppose $y \in \overline{A}$. Then, for each $n \in \ints^+$, since, per Handout 1, every open neigbourhood of $y$ intersects nontrivially, we may pick $y_n \in B_{1/n}(y) \cap A$. Then, $||y_n - y|| < n^{-1}$. And so, given $\varepsilon > 0$, by the Archimedian principle there exists some $N \in \nats$ such that $N \geq \varepsilon^{-1}$, whence, for all $n \geq N$, \begin{equation*}
+        ||y_n - y|| < n^{-1} \leq N^{-1} < \varepsilon
+    \end{equation*} And so $y_n \to y$, as desired.
+\end{proof}
+
+\begin{prop}\label{CompleteImpliesClosed}
+    Suppose $A \subseteq \reals^d$ is complete. Then, $A$ is closed.
+\end{prop}
+\begin{proof}
+    Suppose $x \in \overline{A}$, then, by \tref{SequentialClosureIsClosure}, there exists a sequence $\{x_n\}_{n\in\nats} \subseteq A$ which converges to $x$. Then, since convergent sequences are Cauchy, and $A$ is complete, we have that the $x_n$ converge to a point in $A$. Since limits are unique, we must have $x \in A$, and thus that $\overline{A} \subseteq A$, and so $\overline{A} = A$. Hence $A$ is closed. 
+\end{proof}
+
+\textit{Remark}. These results essentially tell us that we could arrive at the same topology on $\reals^d$ by saying that the closed sets are precisely the subsets of $\reals^d$ which are complete metric spaces, and that the open sets are those which are the compliments of closed sets. Then these abstractly satisfy the union-intersection properties we noted in Handout 1, i.e. $\reals^d$ and $\varnothing$ are complete metric spaces, any intersection of complete metric spaces is a complete metric space, and the finite union of complete metric spaces is a complete metric space (though this last statement is perhaps a little tricky).
+
+Our first big application of the Monotone Convergence theorem was in the proof of the Bolzano-Weierstrass theorem, which is what we now want to prove for the $\reals^d$ case.
+
+\begin{thm}\label{BolzanoWeierstrassForR}
+    Every bounded sequence in $\reals$ admits a convergent subsequence.
+\end{thm}
+\begin{proof}
+    As shown in our first meeting.
+\end{proof}
+
+\begin{thm}\label{BolzanoWeierstrassForRd}
+    Every bounded sequence in $\reals^d$ admits a convergent subsequence.
+\end{thm}
+\begin{proof}
+    We proceed by way of induction on $d$. The base case is \tref{BolzanoWeierstrassForR}. For the inductive step, suppose we have the claim for all $d_1 < d$, for some $d \geq 2$. Let $\{x_n\}_{n\in\nats} \subseteq \reals^d$ be bounded, say $||x_n|| \leq M$ for all $n\in\nats$. Then, let $x_n^{(i)}$ denote the $i$-th component of $x_n$ for each $n\in\nats$ and $1 \leq i \leq d$. Then, $|x_n^{(1)}| \leq M$ and $||(x_n^{(2)}, ..., x_n^{(d)})|| \leq M$ for all $n \in \nats$. By the inductive hypothesis, there exists a convergent subsequence of the $(x_n^{(2)}, ..., x_n^{(d)})$, say $\lim_{j \to \infty} (x_{n_j}^{(2)}, ..., x_{n_j}^{(d)}) = a'$. Then, since subsequences of bounded sequences are bounded, by the inductive hypothesis, there is a convergent subsequence of the $x_{n_j}^{(1)}$, say $\lim_{k\to\infty} x_{n_{j_k}}^{(1)} = a''$. Since subsequences of convergent sequences converge to the same limit, $\lim_{k\to\infty} (x_{n_{j_k}}^{(2)}, ..., x_{n_{j_k}}^{(d)}) = a'$. Then, given $\varepsilon > 0$, pick $N_1, N_2 \in \nats$ such that for all $k \geq N_1$, $||(x_{n_{j_k}}^{(2)},..., x_{n_{j_k}}^{(d)}) - a'|| < \varepsilon/\sqrt{2}$ and for all $k \geq N_2$, $|x_{n_{j_k}}^{(1)} - a''|| < \varepsilon/\sqrt{2}$. Then, for $k \geq N = \max \{ N_1, N_2 \}$, \begin{equation*}
+        || x_{n_{j_k}} - (a'', a') ||^2 = ||x_{n_{j_k}}^{(1)} - a''||^2 + || (x_{n_{j_k}}^{(2)}, ..., x_{n_{j_k}}^{(d)}) - a'||^2 < \frac{\varepsilon^2}{2} + \frac{\varepsilon^2}{2} = \varepsilon^2
+    \end{equation*} And so the $x_n$ admit a convergent subsequence. Since $\{x_n\}_{n\in\nats}$ was arbitrary, we have the inductive step. Hence, we have the claim.
+\end{proof}
+
+\begin{defin}
+    We say that $A \subseteq \reals^d$ is sequentially compact if every $\{x_n\}_{n\in\nats} \subseteq A$ admits a subsequence which converges in $A$.
+\end{defin}
+
+\begin{thm}\label{SequentiallyCompactIFFClosed+Bounded}
+    A subset $A \subseteq \reals^d$ is sequentially compact $\iff$ $A$ is closed and bounded.
+\end{thm}
+\begin{proof}
+    ``$\implies$'' Suppose $A$ is sequentially compact. Let $\{x_n\}_{n\in\nats} \subseteq A$ be a Cauchy sequence. By definition, there is a convergent subsequence $\{x_{n_k}\}_{k\in\nats} \subseteq A$ which converges to a point, say $x \in A$. Then, by \tref{RdIsComplete}, we have that $\{x_n\}_{n\in\nats}$ converges in $\reals^d$, and, since the limit of a subsequence is $x$, the limit of the original sequence is also $x$, whence $A$ is complete, and so closed per \pref{CompleteImpliesClosed}. Now, suppose for a contradiction that $A$ is not bounded. Then for each $n \in \nats$, there exists some $x_n \in A$ such that $||x_n|| \geq n$, and so we may construct a sequence in this manner. By repeating elements if necessary, we can take the $x_n$ to be monotone increasing as well. Then, since any subsequence of a monotone increasing, unbounded sequence, is also monotone increasing and unbounded, and since such sequences cannot converge, we would have that $\{x_n\}_{n\in\nats}$ is a sequence in $A$ which admits no convergent subsequence, a contradiction. Thus $A$ must be bounded.
+
+    ``$\impliedby$'' Suppose $A$ is closed and bounded. Let $\{x_n\}_{n\in\nats} \subseteq A$ be any sequence. Since subsets of bounded sets are bounded, the $x_n$ are bounded, and so by \tref{BolzanoWeierstrassForRd} there exists a convergent subsequence $\{x_{n_k}\}_{k\in\nats} \subseteq A$. Then, by \tref{SequentialClosureIsClosure}, the $x_{n_k}$ converge to a point in $\overline{A} = A$, and so the $x_n$ admit a subsequence which converges in $A$. Hence $A$ is sequentially compact.
+\end{proof}
+
+\begin{prop}
+    If $A \subseteq \reals^n$ is sequentially compact and $B \subseteq A$ is closed, then $B$ is sequentially compact.
+\end{prop}
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{prop}
+    If $f: \reals^n \to \reals^m$ is continuous and $A \subseteq \reals^n$ is sequentially compact, then $f(A)$ is sequentially compact.
+\end{prop}
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\end{document}

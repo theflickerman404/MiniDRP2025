@@ -1,0 +1,238 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+\newcommand{\disk}{\mathbb{D}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+\newcommand{\pref}[1]{\textbf{Proposition~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{defin}{Definition}
+
+\numberwithin{thm}{section}
+\numberwithin{lemma}{section}
+\numberwithin{prop}{section}
+\numberwithin{defin}{section}
+
+\author{Isaac Clark}
+\title{Handout 3}
+
+\begin{document}
+
+\maketitle 
+
+\section{The subspace topology}
+
+Given $A \subseteq \reals^n$, we want to define a family of subsets of $A$, say $\tau_A$, such that, \begin{enumerate}
+    \item $\varnothing, A \in \tau_A$.
+    \item $\tau_A$ is closed under arbitrary unions and finite intersections.
+    \item $(f \circ \iota)^{-1}(U) \in \tau_A$ whenever $U \subseteq \reals^m$ is open and $f: \reals^n \to \reals^m$ is continuous.
+\end{enumerate}
+
+Turns out that $\tau_A = \{ U \cap A \ | \ U \subseteq \reals^n \text{ open}\}$ is the unique family of sets with these properties. One may check, $\varnothing = \varnothing \cap A$ and $A = \reals^n \cap A$, and so $\varnothing, A \in \tau_A$. Further, \begin{align*}
+    \bigcup_{i \in I} \big(U_i \cap A \big) &= \left( \bigcup_{i \in I}  U_i \right) \cap A \\
+    (U \cap A) \cap (V \cap A) &= (U \cap V) \cap A
+\end{align*} And so $\tau_A$ is closed under arbitrary unions and finite intersections. Finally, \begin{align*}
+    \iota^{-1}(U) &= \{ x \in A \ | \ \iota(x) \in U \} \\
+    &= \{ x \in \reals^n \ | \ x \in A \} \cap \{ x \in \reals^n \ | \ x \in U\} \\
+    &= U \cap A \\ \\
+    (f \circ \iota)^{-1}(U) &= \iota^{-1} (f^{-1}(U)) \\
+    &= f^{-1}(U) \cap A
+\end{align*} And so $(f\circ \iota)^{-1}(U)$ is open whever $U \subseteq \reals^m$ is open. I leave it as an exercise to adjust the definition of $\varepsilon - \delta$ and sequential continuity for $f$ defined on a subset of $\reals^n$, and to check that the definitions agree.
+
+\begin{defin}
+    We say that $V \subseteq A$ is open in $A$ if $V = U \cap A$ for some open $U \subseteq \reals^n$.
+\end{defin}
+
+\begin{defin}
+    We say that $C \subseteq A$ is closed in $A$ if $A \setminus C$ is open in $A$.
+\end{defin}
+
+\begin{defin}
+    We say that $f: A \to B$, where $A \subseteq \reals^n$ and $B \subseteq \reals^m$, if $f^{-1}(U)$ is open in $A$ whenever $U$ is open in $B$.
+\end{defin}
+
+\begin{defin}
+    We say that $f: A \to B$ is a homeomorphism if $f$ is bijective, $f$ is continuous, and $f^{-1}$ is continuous.
+\end{defin}
+
+\begin{defin}
+    We say that $A \subseteq \reals^n$ and $B \subseteq \reals^m$ are homeomorphic if there exists a homeomorphism $f: A \to B$. In this case, we write $A \cong B$.
+\end{defin}
+
+\begin{prop}
+    Let $f: A \to B$ be bijective. Then, $f$ is open $\iff f^{-1}$ is continuous.
+\end{prop}
+\begin{proof}
+    We observe that since $f$ is bijective, for each $y \in B$ there exists a unique $x_y \in A$ such that $f(x_y) = y$. So, \begin{equation*}
+        (f^{-1})^{-1}(U) = \{ y \in B \ | \ f^{-1}(y) \in U \} = \{ f(x_y) \in B \ | \ x_y \in U \} = f(U)
+    \end{equation*} And thus $(f^{-1})^{-1}(U)$ is open whenever $f(U)$ is open, and so we have the claim.
+\end{proof}
+
+\begin{prop}
+    The following are homeomorphic to $(0,1)$, \begin{enumerate}[label=(\alph*)]
+        \item $A = (a, b)$
+        \item $B = (a, \infty)$
+        \item $C = (-\infty, a)$
+        \item $D = \reals$
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    For (a), put $f(x) = a + (b - a)x$.
+
+    For (b), consider that $g(x) = a^{-1}x$ exhibits $(a, \infty) \cong (1, \infty)$. And that $h(x) = x^{-1}$ exhibits $(1, \infty) \cong (0, 1)$, and so $g \circ h$ is as desired.
+
+    For (c), consider that $p(x) = -x + 2a$ exhibits $(-\infty, a) \cong (a, \infty)$, which is homeomorphic to $(0, 1)$ per (b), so the composition is as desired.
+
+    For (d), consider that, per (a), $(0, 1) \cong (-\pi/2, \pi/2)$, and then that $q(x) = \tan(x)$ exhibits $(-\pi/2, \pi/2) \cong \reals$, and so the composition is as desired.
+\end{proof}
+
+\begin{prop}
+    The relation $A \sim B \iff A \cong B$ is an equivalence relation.
+\end{prop}
+\begin{proof}
+    $A \sim A$ via $f(x) = x$. If $A \sim B$ via $g$, then $B \sim A$ via $g^{-1}$. And the composition of homeomorphims is a homeomorphism.
+\end{proof}
+
+\begin{prop}
+    $\{a_n\}_{n\in\nats} \subseteq A$ converges to $a \in A \iff$ for all $U \subseteq A$ which are open in $A$ and contain $a$, there exists some $N \in \nats$ such that $a_n \in U$ for all $n \geq N$.
+\end{prop}
+\begin{proof}
+    Exercise. See PS4.
+\end{proof}
+
+\begin{thm}
+    Suppose $f: X \to \reals^n$ is such that there are closed (in $X$) subsets $A, B \subseteq X$ such that $X = A \cup B$ and $f \circ \iota_A$ and $f \circ \iota_B$ are continuous. Then $f$ is continuous.
+\end{thm}
+\begin{proof}
+    Let $C \subseteq \reals^n$ be closed. Then, since $f \circ \iota_A$ and $f \circ \iota_B$ are continuous, $f^{-1}(C) \cap A$ and $f^{-1}(C) \cap B$ are closed in $A$ and $B$ respectively. Since $A, B$ themselves are closed in $X$, $f^{-1}(C) \cap A$ and $f^{-1}(C) \cap B$ are closed in $X$. And so their union, $f^{-1}(C) = (f^{-1}(C) \cap A) \cup (f^{-1}(C) \cap B)$ is closed in $X$. Hence, $f$ is continuous.
+\end{proof}
+
+\begin{defin}
+    We say that $A \subseteq \reals^n$ is discrete if $\tau_A = \mathcal{P}(A)$.
+\end{defin}
+
+\begin{prop}\label{DiscreteCharacterization}
+    $A$ is discrete if and only if for all $a \in A$, there exists $U \subseteq \reals^n$ an open neighbourhood of $a$ such that $U \cap A = \{ a \}$.
+\end{prop}
+\begin{proof}
+    We may first observe that $A$ is discrete if and only if $\{a \}$ is open in $A$ for all $a \in A$, as every subset of $A$ is the union of singletons. Then, $\{ a \}$ is open if and only if there exists some $U \subseteq\reals^n$ open such that $\{a\} = U \cap A$.
+\end{proof}
+
+\begin{prop}
+    If $A \cong B$ and $A$ is discrete, then $B$ is discrete.
+\end{prop}
+\begin{proof}
+    Let $f: A \to B$ be a homeomorphism. By \textbf{Proposition 1.1}, $f$ is open. For each $b \in B$, there exists some $a \in A$ such that $f(a) = b$. Then, $\{b \} = f(\{a\})$ is open in $B$. So by \pref{DiscreteCharacterization}, $B$ is discrete.
+\end{proof}
+
+\begin{prop}
+    We have, \begin{enumerate}[label=(\arabic*)]
+        \item $\ints$ is discrete.
+        \item Finite sets are discrete.
+        \item $\q$ is not discrete.
+        \item $\{ 1/n \ | \ n \in \ints^+ \}$ is discrete.
+        \item $\{ 1/n \ | \ n \in \ints^+ \} \cup \{0\}$ is not discrete.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    We argue via \pref{DiscreteCharacterization}.
+
+    For (1), $B_{1/2}(n) \cap \ints = \{ n \}$.
+
+    For (2), let $F\subseteq\reals^n$ be finite, and pick $\varepsilon > 0$ such that $\varepsilon < 2 \min_{(x, y) \in F^2} ||x-y||$. Then $B_{\varepsilon} (x) \cap F = \{x\}$ for any $x \in F$.
+
+    For (3), note that if $U, C \subseteq \reals$ are open and closed respectively, $U \setminus C$ is open. Thus, every open subset of $\reals$ intersects $\q$ at at least two points.
+
+    For (4), simply observe that $(n + 2)^{-1} < (n+1)^{-1} < (n)^{-1}$ for all $n \in \ints^+$, and so adjacent points can be separated by open sets.
+
+    For (5), by the Archimedian property, every open neighbourhood of $0$ contains $n^{-1}$ for some $n \in \ints^+$.
+\end{proof}
+
+\begin{prop}
+    If $A$ is discrete, then $A$ is countable.
+\end{prop}
+\begin{proof}
+    Since $\q^{n+1}$ is countable, we may enumerate the set of all open balls with centers in $\q^n$ and rational radii, say by $j \mapsto B_j$. Then, for each $a \in A$, by \pref{DiscreteCharacterization} there exists some $U \subseteq \reals^n$ open such that $A \cap U = \{a \}$. But, by density we can find some $j$ such that $a \in B_j \subseteq U$. So we define a map $A \to \nats$ which sends every point to the least $j \in \nats$ such that $B_j$ is as desired, which exhibits an injection from $A$ to $\nats$, whence $A$ is countable.
+\end{proof}
+
+\begin{prop}
+    If $f: X \to Y$ is a homeomorphism and $A \subseteq X$, then $f: A \to f(A)$ is a homeomorphism.
+\end{prop}
+\begin{proof}
+    Exercise. See PS4.
+\end{proof}
+
+\begin{prop}
+    $f: \reals^n \to \reals^m$ is continuous if and only if $f \circ \iota_A$ is continuous for all $\varnothing \ne A \subsetneq X$.
+\end{prop}
+\begin{proof}
+    See PS4.
+\end{proof}
+
+\begin{prop}
+    If $f: A \to B$ is continuous and $B \subseteq \reals^m$, then $f: A \to \reals^m$ is continuous.
+\end{prop}
+\begin{proof}
+    See PS4.
+\end{proof}
+
+\end{document}

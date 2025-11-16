@@ -1,0 +1,306 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+\newcommand{\disk}{\mathbb{D}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+\newcommand{\pref}[1]{\textbf{Proposition~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{defin}{Definition}
+
+\numberwithin{thm}{section}
+\numberwithin{lemma}{section}
+\numberwithin{prop}{section}
+\numberwithin{defin}{section}
+
+\author{Isaac Clark}
+\title{Handout 1}
+
+\begin{document}
+
+\maketitle
+
+Throughout, let for $x \in \reals^n$, let $||x|| = \sqrt{\sum_{i = 1}^n x_i^2 }$ be the norm of $x$. For $x, y \in \reals^n$, let $\iprod{x}{y} = \sum_{i = 1}^n x_iy_i$ be the dot product of $x$ with $y$. For $x \in \reals^n$ and $\varepsilon > 0$, let $B_{\varepsilon}(x) = \{ y \in \reals^n \ | \ ||x-y|| < \varepsilon \}$. When it is clear that $A$ is a subset of $\reals^n$, then we will tend to neglect to mention the ambient space, i.e. rather than saying that $U \subseteq \reals^n$ is open in $\reals^n$, we will simply say that it is open.
+
+\section{Open, closed sets and continuous functions}
+
+\begin{defin}
+    We say that $U \subseteq \reals^n$ is open if, $\forall u \in U \ \exists \varepsilon > 0$ such that $B_{\varepsilon}(u) \subseteq U$.
+\end{defin}
+
+\begin{prop}\label{UnionIntersectionOfOpen}
+    Given $U_i \subseteq \reals^n$ an open set for each $i \in I$ for some indexing set $I$, \begin{enumerate}
+        \item $\varnothing, \reals^n$ are open.
+        \item $\bigcup_{i \in I} U_i$ is open.
+        \item $U_i \cap U_j$ is open for any $i,j \in I$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    Exercise. See PS2.
+\end{proof}
+
+\begin{prop}\label{ExamplesOfOpen}
+    The following sets are open, \begin{enumerate}[label=(\alph*)]
+        \item $B_{r}(x)$ for any $x \in \reals^n$ and $r > 0$.
+        \item $P = \{ x \in \reals^n \ | \ x_i > 0 \text{ for all } 1 \leq i \leq n \}$.
+        \item $\bigcup_{n \in \ints^+} B_{2^{-n}}(n)$.
+    \end{enumerate}
+\end{prop}
+
+\textit{Remark}. (c) is unbounded but has a finite volume, per the geometric series formula.
+
+\begin{proof}
+    Let $x \in \reals^n$ and $r > 0$ be given. Fix $y \in B_{r}(x)$ and put $\varepsilon = r - ||x - y||$. Now, $\varepsilon > 0$ since $||x - y|| < r$ by supposition that $y \in B_r(x)$. And, if $z \in B_{\varepsilon} (y)$ then $||y - z|| < r - ||x - y||$, and so we have, by the triangle inequality, \begin{align*}
+        ||x-z|| \leq ||x - y|| + ||y - z|| < ||x - y|| + r - ||x-y|| = r
+    \end{align*} Whence $z \in B_r(x)$ by definition, and thus $B_{\varepsilon}(y) \subseteq B_r(x)$. Since $y \in B_r(x)$ was arbitrary, we have that $B_r(x)$ is open. Hence (a). \vspace{10pt}
+
+    Suppose $x \in P$. Let $\varepsilon = 2^{-1} \min_{1 \leq i \leq n} x_i$. Since each $x_i > 0$, $\varepsilon > 0$. Suppose $y \in B_{\varepsilon}(x)$. Then, for any $1 \leq i \leq n$, \begin{equation*}
+        |x_i - y_i|^2 \leq \sum_{i = 1}^n |x_i - y_i|^2 = ||x - y||^2 < \varepsilon^2
+    \end{equation*} And so, for each $1 \leq i \leq n$, we have that $|x_i - y_i| < \varepsilon$ and thus, \begin{equation*}
+        y_i > x_i - \varepsilon = x_i - 2^{-1} \min_{1 \leq i \leq n} x_i \geq (1 - 2^{-1}) \min_{1 \leq i \leq n} x_i > 0
+    \end{equation*} And so $y \in P$ and so $B_{\varepsilon}(x) \subseteq P$ and so $P$ is open. Hence (b). \vspace{10pt}
+
+    By (a), each $B_{2^{-n}}(n)$ is open, and so by \pref{UnionIntersectionOfOpen} the union over $\ints^+$ is also open. Hence (c).
+\end{proof}
+
+\begin{defin}
+    We say $C \subseteq \reals^n$ is closed if $\reals^n \setminus C$ is open.
+\end{defin}
+
+\textit{Note}. If $C \subseteq \reals^n$ is closed, then $\reals^n \setminus C = \reals^n \setminus (\reals^n \setminus U) = U$ for some $U \subseteq \reals^n$ open. Hence, the compliment of closed is open and vice versa.
+
+\begin{prop}\label{UnionIntersectionOfClosed}
+    Given $C_i \subseteq \reals^n$ a closed set for each $i \in I$ for some indexing set $I$, \begin{enumerate}
+        \item $\varnothing, \reals^n$ are closed.
+        \item $\bigcap_{i \in I} C_i$ is closed.
+        \item $C_i \cup C_j$ is closed for any $i, j \in I$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    Exercise. See PS2.
+\end{proof}
+
+\begin{prop}\label{ExamplesOfClosed}
+    The following sets are open, \begin{enumerate}[label=(\alph*)]
+        \item $\overline{B_r}(x) = \{ y \in \reals^n \ | \ ||x - y|| \leq r \}$ for any $x \in \reals^n$ and $r \geq 0$.
+        \item $N_{\geq 0} = \{ x \in \reals^n \ | \ x_i \leq 0 \text{ for some } 1 \leq i \leq n \}$.
+        \item Put $C_0 = [0,1]$. Recursively define $C_{n + 1}$ by subdividing each interval of $C_n$ into three pieces and deleting the middle piece, but keeping the endpoints. For example, $C_1 = [0, 1/3] \cup [2/3, 1]$. Let $\mathcal{C} = \bigcap_{n \in \nats} C_n$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    (a) is left as an exercise. \textit{Hint}: use PS2Q3. \vspace{10pt}
+
+    $x \in \reals^n \setminus N_{\geq 0}$ if and only if there does not exist some $1\leq i \leq n$ such that $x_i \leq 0$, i.e $x_i > 0$ for every $1 \leq i \leq$. Thus, $\reals^n \setminus N_{\geq 0} = P$, which is open per \pref{ExamplesOfOpen}, and so $N_{\geq 0}$ is closed. Hence (b). \vspace{10pt}
+
+    We formalize the construction as follows. For each $[a,b] \subseteq \reals$, define, \begin{equation*}
+        S[a,b] = \left[ a , a + \frac{b-a}{3} \right] \cup \left[ a + \frac{2(b -a)}{3}, b \right]
+    \end{equation*} By applying (a) to $x = 2^{-1}(a + b)$ and $r = 2^{-1}(b - a)$ we see that each interval of the form $[a,b]$ is closed. By \pref{UnionIntersectionOfClosed} $S[a,b]$ is closed as the union of two closed sets. Then, if we extend $S$ as follows, \begin{equation*}
+        S \big( [a, b] \cup [c, d] \big) = S[a,b] \cup S[c,d]
+    \end{equation*} The above construction of the $C_n$ yields $C_n = S^nC_0$. By induction, we have that $S^n C_0$ is closed for every $n \in \nats$, and so each $C_n$ is closed. Putting $I = \nats$ and applying \pref{UnionIntersectionOfClosed} we have that $\mathcal{C} = \bigcap_{i \in I} C_i$ is closed. Hence (c).
+\end{proof}
+
+\begin{defin}
+    We say that $f: \reals^n \to \reals^m$ is ``$\varepsilon-\delta$ continuous'' if \begin{equation*}
+        \forall a \in \reals^n \ \forall \varepsilon > 0 \ \exists \delta > 0 \text{ such that } ||x - a|| < \delta \implies ||f(x) - f(a)|| < \varepsilon
+    \end{equation*}
+\end{defin}
+
+\begin{defin}
+    We say that $f: \reals^n \to \reals^m$ is ``sequentially continuous'' if \begin{equation*}
+        \lim_{n \to \infty} f(x_n) = f(x) \text{ whenever } \lim_{n \to \infty} x_n = x
+    \end{equation*}
+\end{defin}
+
+\begin{defin}
+    We say that $f: \reals^n \to \reals^m$ is ``preimage continuous'' if \begin{equation*}
+        f^{-1}(U) \subseteq \reals^n \text{ is open whenever } U \subseteq \reals^m \text{ is open}
+    \end{equation*}
+\end{defin}
+
+\begin{prop}\label{ExamplesOfContinuous}
+    The following are $\varepsilon-\delta$, sequentially, and preimage continuous, \begin{enumerate}
+        \item $f: \reals^n \to \reals^m$ given by $f(x) = c$ for some $c \in \reals^m$ a constant.
+        \item $f: \reals^n \to \reals^n$ given by $f(x) = x$.
+        \item $\nu: \reals^n \to \reals$ given by $\nu(x) = ||x||$.
+        \item $\varphi: \reals^n \to \reals$ given by $\varphi(x) = \iprod{x}{y}$ for some $y \in \reals^n$ a constant.
+        \item $\pi_i: \reals^n \to \reals$ given by $\pi_i (x) = x_i$ for some $1 \leq i \leq n$ fixed.
+        \item $f: \reals \to \reals^n$ given by $f(x) = (x, 0, 0, ..., 0)$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    3, 4, and 5 are left as exercises (see PS1Q3, PS1Q4 and PS2Q12 respectively).
+
+    Fix $c \in \reals^m$ and let $f(x) = c$ for all $x \in \reals^n$. Then, $||f(x) - f(a)|| = ||c - c|| = 0 < \varepsilon$ for any $\varepsilon > 0$ and for any $x, a \in \reals^n$, and so $f$ is $\varepsilon-\delta$ continuous. Suppose $x_n \to x$ as $n \to \infty$, then $f(x_n)$ is the constant sequence $c$ and so converges to $c$, and $f(x) = c$, so we also have that $f$ is sequentially continuous. Now, let $U \subseteq \reals^m$ be open. If $c \in U$, then $f^{-1}(U) = \reals^n$ and if $c \not\in U$ then $f^{-1}(U) = \varnothing$, each of which are open per \pref{UnionIntersectionOfOpen}, and so $f$ is preimage continuous. Hence 1. \vspace{10pt}
+
+    Now let $f(x) = x$ for all $x \in \reals^n$. Then, if $a \in \reals^n$, and $\varepsilon > 0$, put $\delta = \varepsilon$. Then, if $||x-a|| < \delta$ then $||f(x) - f(a)|| = ||x - a|| < \delta = \varepsilon$, and so $f$ is $\varepsilon-\delta$ continuous. There is nothing to show for sequential continuity. Now, let $U \subseteq \reals^n$ be open, then $f^{-1}(U) = U$ is open, whence $f$ is preimage continuous. Hence 2. \vspace{10pt}
+
+    Now let $f: \reals \to \reals^n$ be given by $f(x) = (x, 0, 0, ..., 0)$. We observe that $||f(x)|| = |x|$, and so taking $\delta = \varepsilon$ and arguing similar to the above yields that $f$ is $\varepsilon-\delta$ continuous. Suppose $x_n \to x$ as $n \to \infty$. Then, let $\varepsilon > 0$ be given and pick $N \in \nats$ such that $n \geq N \implies ||x_n - x|| < \varepsilon$. Then, if $n \geq N$, then \begin{equation*}
+        ||f(x_n) - f(x)|| = ||f(x_n - x)|| = ||x_n - x|| < \varepsilon
+    \end{equation*} And so $f$ is sequentially continuous. Now, let $U \subseteq \reals^n$ be open. Then, suppose $x \in f^{-1}(U)$, then $(x, 0, 0, ..., 0) \in U$. Since $U$ is open, there exists some $\varepsilon > 0$ such that $B_{\varepsilon} \big((x, 0, 0, ..., 0) \big) \subseteq U$. Then, $(y, 0, 0, ..., 0) \in U$ for all $y \in (x - \varepsilon, x + \varepsilon)$, whence $(x - \varepsilon, x + \varepsilon) \subseteq f^{-1}(U)$, so applying PS2Q3 we have that $f^{-1}(U)$ is open, and therefore that $f$ is preimage continuous. Hence 6.
+\end{proof}
+
+\textit{Remark}. It will turn out that there is no use distinguishing between these different ``flavours'' of continuity, as all are equivalent; however it is still educational to prove that a function is continuous in each of these ways, as oftentimes one definition will be the easiest to work with, a distinction only possible when one has practice will all of them. \newpage
+
+\section{Closure, interior}
+
+\begin{defin}
+    Given $A \subseteq \reals^n$, we define the clousre of $A$, $\overline{A} = \bigcap_{C \supseteq A} C$ to be the intersection of all closed sets which contain $A$.
+\end{defin}
+
+\begin{prop}\label{ClosureIsClosed}
+    $\overline{A}$ is closed for any $A \subseteq \reals^n$.
+\end{prop}
+\begin{proof}
+    Let $I = \{ C \subseteq \reals^n \ | \ C \text{ is closed and } C \supseteq A\}$ and put $U_i = i$ for each $i \in I$, then apply \pref{UnionIntersectionOfClosed}.
+\end{proof}
+
+\begin{prop}\label{ClosureContainsA}
+    $A \subseteq \overline{A}$ for any $A \subseteq \reals^n$.
+\end{prop}
+\begin{proof}
+    This is straightforward, \begin{equation*}
+        \overline{A} = \bigcap_{\substack{C \ closed \\ C \supseteq A}} C \supseteq \bigcap_{\substack{C \ closed \\ C \supseteq A}} A = A
+    \end{equation*} Where the $\supseteq$ follows because we require $C \supseteq A$ in the intersection.
+\end{proof}
+
+\begin{thm}\label{ClosureIsIntersectingPoints}
+    $\overline{A}$ is precisely the set of $x \in \reals^n$ such that \begin{equation*}
+        \forall U \subseteq \reals \text{ open, } x \in U \implies U \cap A \ne \varnothing
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    We will show the contrapositive for $\subseteq$. Suppose $x \in \reals^n$ is such that there exists some $U \subseteq \reals^n$ open such that $x \in U$ and $U \cap A = \varnothing$. Then $C = \reals^n \setminus U$ is closed and contains $A$, and so $C \supseteq \overline{A}$. In particular, if $x \in \overline{A}$ then $x \in C$, a contradiction, as $x \in U$. Hence we have that $x \not\in \overline{A}$ and thus $\subseteq$.
+
+    We will also show the contrapositive for $\supseteq$. Suppose $x \not\in \overline{A}$, then $x \in \reals^n \setminus \overline{A}$. By \pref{ClosureIsClosed}, $\overline{A}$ is closed and so $U = \reals^n \setminus \overline{A}$ is open. Then, $U \cap \overline{A} = \varnothing$ by definition and so $U \cap A = \varnothing$ in particular. Clearly $x \in U$ as well. Thus, $\supseteq$.
+
+    Taken together, we have the claim.
+\end{proof}
+
+\begin{prop}\label{ClosedIsOwnClosure}
+    $A \subseteq \reals^n$ is closed $\iff$ $\overline{A} = A$.
+\end{prop}
+\begin{proof}
+    We always have $A \subseteq \overline{A}$ by \pref{ClosureContainsA}, so it suffices to show that $A$ is closed if and only if $\overline{A} \subseteq A$. Now, if $A$ is closed, since $\overline{A} \subseteq C$ for any $C \supseteq A$ which is closed, and certianly $A \supseteq A$, we have $\overline{A} \subseteq A$. Conversely, if $\overline{A} =A$ then $A$ is closed since $\overline{A}$ is closed by \pref{ClosureIsClosed}. Hence, we have the claim.
+\end{proof}
+
+A similar, though less useful, notion to that of closure is interior.
+
+\begin{defin}
+    Given $A \subseteq \reals^n$, we define the interior of $A$, $\interior \ A = \bigcup_{\substack{U \subseteq A}}U$ to be the union of all open sets contained in $A$.
+\end{defin}
+
+\begin{prop}\label{InteriorIsOpen}
+    $\interior \ A$ is open for any $A \subseteq \reals^n$.
+\end{prop}
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{prop}\label{InteriorContainedInA}
+    $\interior \ A \subseteq A$ for any $A \subseteq \reals^n$.
+\end{prop}
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{thm}\label{InteriorCharacterization}
+    $\interior \ A$ is precisely the $x \in \reals^n$ such that $\exists \varepsilon > 0$ such that $B_{\varepsilon}(x) \subseteq A$.
+\end{thm}
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\textit{Corollary}. $\interior \ A = A$ if and only if $A$ is open.
+
+\section{Continuous functions, revisited}
+
+\begin{thm}
+    Let $f: \reals^n \to \reals^m$. Then, the following are equivalent, \begin{enumerate}
+        \item $f^{-1}(C) \subseteq \reals^n$ is closed whenever $C\subseteq \reals^m$ is closed.
+        \item $f$ is ``preimage'' continuous.
+        \item $f(\overline{A}) \subseteq \overline{f(A)}$ for all $A \subseteq \reals^n$.
+        \item $f$ is ``sequentially'' continuous.
+        \item $f$ is ``$\varepsilon -\delta$'' continuous.
+        \item For all $a \in \reals^n$ and every $V \subseteq \reals^m$ open with $f(a) \in V$, there exists some $U \subseteq \reals^n$ open such that $a \in U$ and $f(U) \subseteq V$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    ``(1)$\implies$(2)'' Suppose $f$ satisfies (1) and that $U \subseteq \reals^m$ is open, then $\reals^m \setminus U$ is closed, so $f^{-1}(\reals^m \setminus U)$ is closed. But $f^{-1}(\reals^m \setminus U) = f^{-1}(\reals^m)\setminus f^{-1}(U) = \reals^n \setminus f^{-1}(U)$. Hence, $f^{-1}(U)$ is open. So, (1)$\implies$(2).
+
+    ``(2)$\implies$(3)'' Suppose $f$ satisfies (2) and $y \in f(\overline{A})$. Then there exists some $x \in \overline{A}$ such that $f(x) = y$. Since $x \in \overline{A}$, by \tref{ClosureIsIntersectingPoints}, every $U \subseteq \reals^n$ which contains $x$ intersects $A$ non-trivially. Then, given $V \subseteq \reals^m$ an open set containing $y$, $f^{-1}(V)$ is open and contains $x$, so $f^{-1}(V) \cap A \ne \varnothing$. Taking the image of each side under $f$, we have $\varnothing \ne f(f^{-1}(V)) \cap f(A) \subseteq V \cap f(A)$, and so $f(A)$ intersects $V$ non-trivially. Since $V$ was arbitrary, we have that $y \in \overline{f(A)}$, and thus that $f(\overline{A}) \subseteq \overline{f(A)}$. So (2)$\implies$(3).
+
+    We will prove ``(3)$\implies$(4)'' when we have more technology.
+
+    ``(4)$\implies$(5)'' We will show the contrapositive. Suppose $f$ satisfies not (5), i.e. there exists some $\varepsilon_0 > 0$ such that for every $\delta > 0$ there exists some point $x \in \reals^n$ such that $||x - a|| < \delta$ but $||f(x) - f(a)|| \geq \varepsilon_0$. For $n \in \ints^+$, put $\delta_n = 1/n$. Then, for each $\delta_n$, there is some $x_n \in \reals^n$ such that $||x_n - a|| < \delta_n$ but $||f(x_n) - f(a)|| \geq \varepsilon_0$. But then the $\{x_n\}_{n \in \ints^+}$ is a sequence which converges to $a$ for which $f(x_n) \not\to f(a)$, and so $f$ is not sequentially continuous at $a$.
+
+    ``(5)$\implies$(6)'' Suppose $f$ satisfies (5), fix $a \in \reals^n$, and let $V \subseteq \reals^m$ be open set which contains $f(a)$. Then, there exists some $\varepsilon > 0$ such that $B_{\varepsilon}(f(a)) \subseteq V$. By definition, there is some $\delta > 0$ such that $||x-a|| < \delta \implies ||f(x) - f(a)|| < \varepsilon$. Then $f(B_{\delta}(a)) \subseteq B_{\varepsilon}(f(a)) \subseteq V$, so $U = B_{\delta}(a)$ is as desired. Hence (5)$\implies$(6).
+
+    We will prove ``(6)$\implies$(1)'' when we have more technology.
+
+    Taken together, we have \begin{equation*}
+        (1) \implies (2) \implies (3) \implies (4) \implies (5) \implies (6) \implies (1)
+    \end{equation*} And thus equivalence thereof.
+\end{proof}
+
+\textit{Remark}. If one is willing to prove a few more implications, there is a way to show equivalence of the above using only our current results, which may be a good exercise.
+
+\end{document}

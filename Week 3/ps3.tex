@@ -1,0 +1,139 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{problem}{Problem}
+
+\author{Isaac Clark}
+\title{Problem Set 3}
+
+\begin{document}
+
+\maketitle
+
+Throughout this problem set, let $(X, d)$ be a metric space.
+
+\begin{problem}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq X$ is a sequence in $X$ which has the property that every subsequence $\{x_{n_k} \}_{k\in\nats}$ of $\{x_n\}_{n\in\nats}$ admits a subsubsequence $\{x_{n_{k_j}}\}_{j\in\nats}$ which converges to $x \in X$. Show that $x_n \to x$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Find all of the limit points of $A = \{ (-1)^n + n^{-1} \ | \ n \in \ints \}$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    We say that $a \in A \subseteq \reals^n$ is isolated if there exists an open neighbourhood $U$ of $a$ such that $U \cap A = \{ a \}$. Show that $\overline{A}$ may be written as the disjoint union of the limit points of $A$ and the isolated points of $A$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $A \subseteq \reals^n$. Prove that $A'$, the set of limit points of $A$, is closed.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Prove or disprove: $(A \cup B)' = A' \cup B'$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    For $A \subseteq \reals^n$ and $x \in \reals^n$, we define $d(x, A) = \inf_{a \in A} ||x - a||$. For $n \in \ints^+$, let $A_n = \{ x \in \reals^n \ | \ d(x, A) < n^{-1} \}$. Show that, $A' = \bigcap_{n=1}^{\infty} \overline{A_n} \setminus A$
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{x_n\}_{n\in\nats} \subseteq \reals^n$ is such that $||y_{n+1} - y_n|| \leq 2^{-n}$. Show that the $y_n$ converge.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Let $\{x_n\}_{n\in\nats} \subseteq \reals^n$ be such that $x_{2n} \to L_1$ and $x_{2n + 1} \to L_2$. Show that the $x_n$ converge if and only if $L_1 = L_2$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\limsup_{n\to\infty} ||x_n|| = 0$. Prove $x_n \to 0$.
+\end{problem}
+
+\section{Bonus topic: double sequences}
+
+\textbf{Definition.} A double sequence in $X$ is a function $a: \nats \times \nats \to X$ typically denoted by $(m,n) \mapsto a_{m,n}$. We say that the double limit of $\{a_{n,m}\}_{n,m\in\nats}$ is $a \in X$ if, for all $\varepsilon > 0$ there exists some $N \in \nats$ such that for all $n, m > N$ we have $d(a_{m,n}, a) < \varepsilon$. We say that a double sequence is double Cauchy if for all $\varepsilon > 0$ there exist some $N \in \nats$ such that for all $n,n', m, m' > N$, we have $d(a_{m,n}, a_{m',n'}) < \varepsilon$.
+
+\begin{problem}
+    Suppose $\{a_{m,n}\}_{n,m\in\nats} \subseteq X$ is a double sequence with double limit $a$. Then, \begin{equation*}
+        \lim_{n\to\infty} \lim_{m\to\infty} a_{m,n} = a = \lim_{m\to\infty} \lim_{n\to\infty} a_{m,n}
+    \end{equation*} Let $a_{m,n} = 1$ if $m=n$ and $0$ otherwise. Show that each iterated limit exists, and that they are equal, but that the double limit does not.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $X$ is complete. Show that, \begin{enumerate}[label=(\arabic*)]
+        \item If $\{a_{m,n}\}_{n,m\in\nats} \subseteq X$ has a double limit then it is double Cauchy.
+        \item If $\{a_{m,n}\}_{n,m\in\nats} \subseteq X$ is double Cauchy, then it has a double limit.
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $X$ is complete. Show that if $d(a_{m,n} , a_{m,n+1}) , d(a_{m,n}, d_{m+1,n}) \to 0$ as $n, m \to \infty$, then $\{a_{m,n}\}_{n,m\in\nats}$ has a double limit.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{a_{m,n}\}_{n,m\in\nats} \subseteq X$ is such that (1) for fixed $m \in \nats$, there exists some $x_m \in X$ and $N_m \in \nats$ such that $a_{m,n} = x_m$ for all $n > N_m$ and (2) for fixed $n \in \nats$, $\lim_{m\to\infty} a_{m,n}$ exists. Prove that $\{a_{m,n}\}_{n,m\in\nats}$ has a double limit.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose now that $X \subseteq \reals^n$ is closed and bounded. Show that for all $\{a_{m,n}\}_{n,m\in\nats} \subseteq X$, there exists a sequence $m_k = n_k$ such that $\lim_{k \to \infty} a_{m_k,n_k}$ exists.
+\end{problem} \vspace{10pt}
+
+\end{document}

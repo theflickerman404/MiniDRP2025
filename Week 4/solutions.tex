@@ -1,0 +1,199 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{problem}{Problem}
+
+\author{Isaac Clark}
+\title{Solution Manual 1}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}\textbf{(1.2)}
+    Fix $k \in \nats$. Let $\{-1, 1\}^k$ be the set of all $k$-tuples in $\{-1, 1\}$. Show that, for any $x_0, x_1, ..., x_k \in \reals^n$, we have, \begin{equation*}
+        \sum_{a \in \{-1, 1\}} \left| x_0 + \sum_{i =1}^k a_ix_i \right|^2 = 2^k \sum_{i = 0}^k |x_i|^2
+    \end{equation*}
+\end{problem}
+\begin{proof}
+    We proceed by way of induction. The $k = 0$ case is clear, since \begin{equation*}
+        \sum_{a \in \{-1,1\}^0 } \left| x_0 + \sum_{i = 1}^0 a_ix_i \right|^2 = |x_0|^2 = 2^0 \sum_{i=0}^0 |x_i|^2
+    \end{equation*} The $k = 1$ case is also clear, since \begin{align*}
+        \sum_{a \in \{-1, 1\}^1} \left| x_0 + \sum_{i=1}^1 a_ix_i \right|^2 &= |x_0 + x_1|^2 + |x_0 - x_1|^2 \\
+        &= \iprod{x_0 + x_1}{x_0 + x_1} + \iprod{x_0 - x_1}{x_0 - x_1} \\
+        &= 2\iprod{x_0}{x_0} + 2\iprod{x_1}{x_1} + 2 \iprod{x_0}{x_1} - 2 \iprod{x_0}{x_1} \\
+        &= 2 |x_0|^2 + 2 |x_1|^2 \\
+        &= 2^1 \sum_{i = 0}^1 |x_i|^2
+    \end{align*} So suppose the claim is true for $k \geq 1$. Then, \begin{align*}
+        2^{k+1} \sum_{i=0}^{k+1} &= 2 \left( 2^k|x_{k+1}|^2 + 2^k\sum_{i=0}^k |x_i|^2 \right) \\
+        &= \sum_{a \in \{-1, 1\}^k } 2 \left| x_0 + \sum_{i=1}^k a_ix_i \right|^2 + 2^k \cdot 2 |x_{k+1}|^2 \\
+        &= \sum_{a \in \{-1, 1\}^k } \left( 2 \bigg|x_0 + \sum_{i=1}^k a_ix_i \bigg|^2 + 2 |x_{k+1}|^2 \right) \text{ , since } |\{-1,1\}^k| = 2^k \\
+        &= \sum_{a \in \{-1,1\}^k } \left( \bigg| x_0 + \sum_{i = 1}^k a_ix_i + x_{k+1} \bigg|^2 + \bigg| x_0 + \sum_{i=1}^k a_i x_i - x_{k+1} \bigg|^2 \right) \\
+        &= \sum_{b \in \{-1,1\}^{k+1} } \left| x_0 + \sum_{i=1}^{k+1} b_ix_i \right|^2
+    \end{align*} And so we have the inductive step, and hence the claim.
+\end{proof}
+
+\begin{problem}\textbf{(1.7)}
+    Suppose $\{a_n\}_{n\in\nats}, \{b_n\}_{n\in\nats} \subseteq \reals$ are sequences with, for all $n \in \nats$, \begin{equation*}
+        a_n \leq a_{n+1} \leq b_{n+1} \leq b_n
+    \end{equation*} Define, for each $n \in \nats$, $I_n = [a_n, b_n]$. Show that there exists some $x \in \reals$ such that $x \in I_n$ for all $n \in \nats$.
+\end{problem}
+\begin{proof}
+    By the Monotone Convergence theorem, $a^* := \lim_{n\to\infty}a_n$ and $b^* := \lim_{n\to\infty} b_n$ exist as the $a_n$ and $b_n$ are monotone increasing and decreasing respectively, and are bounded above by $b_0$ and below by $a_0$ respectively. Since $a_n \leq b_n$ for all $n \in \nats$, $a^* \leq b^*$. Further, for all $n\in\nats$, \begin{equation*}
+        a_n \leq a^* \leq b^* \leq b_n
+    \end{equation*} And so $[a^*, b^*] \subseteq \bigcap_{i=0}^{\infty} I_n$, whence it is non-empty.
+\end{proof}
+
+\begin{problem}\textbf{(1.12)}
+    Suppose $\{x_n\}_{n\in\ints^+} \subseteq \reals$ is a bounded sequence. Define $\{c_n\}_{n\in\ints^+}$ by $c_n = \big( \sum_{k=0}^n x_k \big)/n$. Show that, \begin{equation*}
+        \liminf_{n\to\infty} x_n \leq \liminf_{n\to\infty} c_n \leq \limsup_{n\to\infty} c_n \leq \limsup_{n\to\infty} x_n
+    \end{equation*} Deduce that if $\lim_{n\to\infty}x_n$ exists, then $\lim_{n\to\infty} c_n$ exists and $\lim_{n\to\infty} x_n = \lim_{n\to\infty} c_n$. Also show that, while the sequence $x_n = (-1)^n$ doesn't converge, the Cesàro sums converge to $0$. Also, find a sequence whose Cesàro sums don't converge.
+\end{problem}
+\begin{proof}
+    As the $x_n$ are bounded, say $|x| \leq M$ we have $|c_n| \leq \sum_{i=1}^n |x_k|/n \leq \sum_{i = 1}^n M/n = M$, and so the $c_n$ are bounded, and so \begin{equation*}
+        \liminf_{n\to\infty} c_n \leq \limsup_{n\to\infty} c_n
+    \end{equation*} Put $L := \limsup_{n\to\infty} x_n$. Then, for all $\varepsilon > 0$, there exists an $N \geq 1$ such that for all $n \geq N$, we have $x_n \leq L + \varepsilon$. Then, for $n \geq N$, \begin{equation*}
+        c_n = \frac{1}{n} \sum_{k=1}^n x_k = \frac{1}{n} \sum_{k = 1}^{N-1} + \frac{1}{n} \sum_{k=N}^{n} x_k \leq \frac{1}{n} \sum_{k=1}^{N-1} x_k + \frac{(n-N+1)(L + \varepsilon)}{n}
+    \end{equation*} For fixed $\varepsilon$, $N$ is fixed, so the first terms tends to $0$ and the second term tends to $L + \varepsilon$. Thus, $\limsup_{n\to\infty} c_n \leq L + \varepsilon$ for all $\varepsilon > 0$, whence $\limsup_{n\to\infty} c_n \leq L = \limsup_{n\to\infty} x_n$. Then, \begin{equation*}
+        \liminf_{n\to\infty} c_n = - \limsup_{n\to\infty} (-c_n) \geq -\limsup_{n\to\infty} (-x_n) = \liminf_{n\to\infty} x_n
+    \end{equation*} And so taken all together, we have the first part of the claim.
+
+    Next, put $x_n = (-1)^n$. Then, if $n = 2k$ for some $k \in \ints^+$, then, \begin{equation*}
+        c_n = \frac{1}{n} \sum_{j=1}^{n} (-1)^j = \frac{1}{n} \left( \sum_{l = 1}^k (-1)^{2k - 1} + (-1)^{2k} \right) = \frac{1}{n} \left( \sum_{l=1}^k 1 - 1 \right) = 0
+    \end{equation*} If $n = 2k + 1$ for some $k \in \nats$, then, \begin{equation*}
+        c_n = \frac{1}{n} \sum_{k = 1}^n x_n = \frac{1}{n} \sum_{k = 1}^{2k} (-1)^k - \frac{1}{n} = - \frac{1}{n}
+    \end{equation*} So, given $\varepsilon > 0$, if $n \geq 2\varepsilon^{-1}$, then, $|c_n| \leq n^{-1} < \varepsilon$, and so though the $x_n$ do not converge, the Cesàro sums converge.
+
+    Finally, put $x_n = (-1)^{\lfloor \log_2 (n) \rfloor}$. Then, \begin{align*}
+        c_{2^{2k+1}-1} &= \frac{1}{2^{2k+1}-1} \sum_{l = 1}^{2k} (-2)^l \\
+        &= \frac{2}{3} \cdot \frac{4^k - 1}{2 \cdot 4^k - 1} \\
+        &\to \frac{1}{3} \text{ , as } k \to \infty \\ \\
+        c_{2^{2k}-1} &= \frac{1}{2^{2k}-1} \sum_{l = 1}^{2k-1} (-2)^l \\
+        &= \frac{-1}{3} \cdot \frac{4^k + 2}{4^k - 1} \\
+        &\to \frac{-1}{3} \text{ , as } k \to \infty
+    \end{align*} Hence $c_n$ has two subsequences which converge to different limits, and so diverges.
+\end{proof}
+
+\begin{problem}\textbf{(2.7)}
+    Given $A \subseteq \reals^n$. Show that, \begin{enumerate}[label=(\arabic*)]
+        \item $\partial A$ = $\overline{A} \cap \overline{\reals^n \setminus A}$.
+        \item $\interior (A) \cap \partial A = \varnothing$.
+        \item $\partial A = \varnothing \iff A$ is clopen.
+    \end{enumerate}
+\end{problem}
+\begin{proof}
+    $x \in \partial A$ if and only if every open neighbourhood of $x$ intersects $A$ and $\reals^n \setminus A$ non-trivially if and only if $x \in \overline{A}$ and $x \in \overline{\reals^n \setminus A}$.
+
+    Suppose, for a contradiction, that $x \in \interior(A) \cap \partial A$. Then, there exists some $\varepsilon >0$ such that $B_{\varepsilon}(x) \subseteq \interior(A) \subseteq A$. But then, by definition there exists some $y \in B_{\varepsilon}(x) \cap (\reals^n \setminus A) \subseteq A \cap (\reals^n \setminus A) = \varnothing$, a contradiction.
+
+    If $A$ is clopen, then $\reals^n \setminus A$ is closed, and so $\overline{A} \cap \overline{\reals^n \setminus A} = A \cap (\reals^n \setminus A) = \varnothing$. On the other hand, if $\partial A = \varnothing$, then every $x\in A$ has an open neighbourhood $U$ such that either $U \subseteq A$ if $x\in A$ or $U \subseteq \reals^n \setminus A$ if $x \not\in A$, which exhibits $A$ as clopen.
+\end{proof}
+
+\begin{problem}\textbf{(2.10)}
+    For $x \in \reals^n$, let $||x|| = \sqrt{x \cdot x}$, let $||x||_1 = \sum_{i=1}^n|x_i|$, and let $||x||_{\infty} = \max_{1 \leq i \leq n} |x_i|$. Prove that, for all $x\in \reals^n$, \begin{equation*}
+        ||x||_{\infty} \leq ||x||_1 \leq ||x|| \leq n ||x||_{\infty}
+    \end{equation*} Deduce that if $U \subseteq \reals^n$ and $V \subseteq \reals^m$ are open, then $U \times V \subseteq \reals^{n+m}$ is open.
+\end{problem}
+\begin{proof}
+    Clearly $||x||_1 \leq n||x||_{\infty}$. By the triangle inequality, $||x|| \leq ||x||_1$. Also, \begin{equation*}
+        ||x||^2 = \sum_{i = 1}^n x_i^2 \geq ||x||_{\infty}^2
+    \end{equation*} And so by transitivity, $||x||_{\infty} \leq ||x|| \leq ||x||_1 \leq n ||x||_{\infty}$.
+
+    Now suppose that $U \subseteq \reals^n$ and $V \subseteq \reals^m$ are open. Suppose $(x, y) \in U \times V$, i.e. $x \in U$ and $y \in V$. Then there exists $\varepsilon_n, \varepsilon_m > 0$ such that $B_{\varepsilon_n} (x) \subseteq U$ and $B_{\varepsilon_m}(y) \subseteq V$. Put $B_r^{\infty}(a) = \{ x \in \reals^d \ | \ ||x-a||_{\infty} < r \}$ and likewise for $B^1_r(a)$. Put $\varepsilon = \min \{ \varepsilon_n, \varepsilon_m \}$. Then, if $z \in B_{\varepsilon}^{\infty}(x, y)$ then $||(x, y) - z|| \leq n ||(x, y) - z||_{\infty} < n\varepsilon$ and so $B_{\varepsilon /n}(x,y) \subseteq B^{\infty}_{\varepsilon}(x, y)$. Further, $||(x,y)-z||_{\infty} < \varepsilon$ implies $|x^{(i)} - z^{(i)}| < \varepsilon$ and $|y^{(j)} - z^{(n + j)}| < \varepsilon$ for all $1 \leq i \leq n$ and $1 \leq j \leq m$. Whence $||x - (z^{(i)})_{i=1}^n|| \leq ||x - (z^{(i)})_{i=1}^n||_1 < n \varepsilon$. Likewise, $||y - (z^{(i)})_{i=n+1}^{n+m}|| < m \varepsilon$. So $(z^{(i)})_{i=1}^n \in U$ and $(z^{(i)})_{i=n+1}^{n+m} \in V$, whence $z \in U \times V$ and so $U \times V$ is open.
+\end{proof}
+
+\begin{problem}\textbf{(2.15)}
+    Suppose $A \subseteq \reals^n$ is not closed. Find a function $f: A \to \reals$ which is continuous and unbounded.
+\end{problem}
+\begin{proof}
+    Since $A$ is not closed, $\reals^n \setminus A$ is not open, and so there exists some $y \in \reals^n \setminus A$ such that $B_{\varepsilon}(y) \cap A \ne \varnothing$ for all $\varepsilon > 0$. Put $f(x) = ||y-x||^{-1}$. Since $y \not\in A$, $f$ is well-defined. Since $1/x$ is continuous on $(0, \infty)$, $f$ is the composition of continuous functions and so is continuous on $A$. For each $n \in \ints^+$, we may pick some $x_n \in B_{1/n}(y) \cap A$. Then $||x_n - y||^{-1} \geq n$, and so $f$ is unbounded.
+\end{proof}
+
+\begin{problem}\textbf{(2.18)}
+    Let $\mathcal{F} = \{f_i : \reals \to \reals\}_{i\in I}$ be a family of continuous functions. Let $V(\mathcal{F})$ be the set of point for which the $f_i$ simultaneously vanish. Then, \begin{enumerate}
+        \item $V(\mathcal{F})$ is closed.
+        \item If $C$ is closed, then there is a continuous function $f$ such that $C = V(\{f\})$.
+    \end{enumerate}
+\end{problem}
+\begin{proof}
+    For (1), $V(\mathcal{F})$ may be written as the intersection of the preimage of $\{0 \}$, a closed set, under continuous functions, whence it is closed.
+
+    For (2), since every open set may be written as the countable union of open intervals, it suffices to construct a continuous function which vanishes outside of and is non-zero on a prescribed open set, since in the end we may take the sum over all such functions, as there are only countably many. Then, $f(x) = e^{(x-a)^{-1}(x-b)^{-1}}$ for $x \in (a, b)$ and $0$ elsewhere is as desired, as it certainly vanishes outide of $(a, b)$ and is non-zero on $(a, b)$. Further, $\lim_{x \to a} f(x) = 0$ and $\lim_{x \to b} f(x) = 0$, and so $f$ is continuous.
+\end{proof}
+
+\begin{problem}\textbf{(2.25)}
+    Suppose that $f, g: \reals \to \reals$ are continuous functions such that $f(x) = g(x)$ when $x \in D$, where $D$ is dense in $\reals$. Prove that $f(x) = g(x)$ for all $x \in \reals$.
+\end{problem}
+\begin{proof}
+    There are several ways to approach this, perhaps the simpliest is to consider sequences. Since $D$ is dense, for any $x \in \reals$ we may pick a sequence $\{x_n \}_{n\in\nats} \subseteq D$ which converges to $x$. Then, since $f$ and $g$ are continuous and agree on $D$, \begin{equation*}
+        f(x) = \lim_{n \to \infty} f(x_n) = \lim_{n \to \infty} g(x_n) = g(x)
+    \end{equation*} And so they are equal everywhere.
+\end{proof}
+
+\begin{problem}\textbf{(2.26)}
+    Suppose $f: \reals^n \to \reals^m$ is continuous, show that the graph of $f$, denoted by $\Gamma(f) = \{(x, f(x)) \ | \ x \in \reals^n \}$ is closed.
+\end{problem}
+\begin{proof}
+    Any sequence in $\Gamma(f)$ must be of the form $\{(x_n, f(x_n))\}_{n\in\nats}$ for some $x_n \in \reals^n$. Then, suppose $(x_n, f(x_n)) \to (x, y)$ for some $x \in \reals^n$ and $y \in \reals^m$. (It is a good exercise to check that a sequence of vectors converges if and only if it converges pointwise). Since $f$ is continuous, $f(x_n) \to x$, and so by uniqueness of limits $f(x) = y$, and so every convergent sequence in $\Gamma(f)$ converges to a point in $\Gamma(f)$, whence it is closed.
+\end{proof}
+
+\end{document}

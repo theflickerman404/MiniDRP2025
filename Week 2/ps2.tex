@@ -1,0 +1,237 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{problem}{Problem}
+
+\author{Isaac Clark}
+\title{Problem Set 2}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Let $I$ be a set. For each $i \in I$, let $U_i \subseteq \reals^n$ be an open set. Suppose also that $U, V \subseteq \reals^n$ are open. Show that, \begin{enumerate}
+        \item $\varnothing, \reals^n$ are open.
+        \item $U \cap V$ is open.
+        \item $\bigcup_{i \in I} U_i$ is open.
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Replacing each occurence of open with closed in \textbf{Problem 1}, show that, \begin{enumerate}
+        \item $\varnothing, \reals^n$ are closed.
+        \item $U \cup V$ is closed.
+        \item $\bigcap_{i \in I} U_i$ is closed.
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $U \subseteq \reals^n$ is such that for all $u \in U$, there exists an open set $A \subseteq U$ such that $x \in A$. Then, $U$ is open.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    A subset $D \subseteq \reals$ is said to be dense if for all $U \subseteq \reals$ non-empty and open, we have $U \cap D \ne \varnothing$. Fix $x, y \in \reals$ with $x < y$. Show that,
+    \begin{enumerate}
+        \item There exists some $q \in \q$ such that $x < q < y$.
+        \item $\q$ is dense in $\reals$.
+        \item $U \subseteq \reals$ is open $\iff$ for all $u \in U$ there exists some $\varepsilon \in \q^+$ such that $B_{\varepsilon}(u) \subseteq U$.
+        \item Every open set is the countable union of open balls.
+    \end{enumerate} Hint: for (1), apply the Archimedian property to $(y - x)^{-1}$. Then, it suffices to show that (1) $\implies$ (2), that (2) $\implies$ (3) and then use all of these plus \textbf{Problem 3} for (4).
+\end{problem} \newpage
+
+\begin{problem}
+    Fix $a,b \in \reals$ with $a < b$. Show that the following are open, \begin{enumerate}
+        \item $(a, b)$
+        \item $(a, \infty)$
+        \item $(- \infty , a)$
+    \end{enumerate} Note: there are at least 3 different proofs of this, so one mustn't settle for just one!
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{x_n\}_{n \in \nats} \subseteq \reals$ is a bounded, monotone decreasing sequence. Show that $\lim_{n \to \infty}x_n = \inf_{n \in \nats} \{x_n \}$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Recall that for $A \subseteq \reals^n$, we defined \begin{equation*}
+        \partial A = \{ x \in \reals^n \ : \ \forall U \subseteq \reals^n \text{ open with } x \in U , \ U \cap A \ne \varnothing , \ U \cap (\reals^n \setminus A) \}
+    \end{equation*} Show that, \begin{enumerate}
+        \item $\partial A = \overline{A} \cap \overline{\reals^n \setminus A}$.
+        \item $\interior(A) \cap \partial A = \varnothing$.
+        \item $\partial A = \varnothing \iff A$ is clopen.
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $f: \reals \to \reals$ is such that $\sup f(A) = f(\sup A)$ for all bounded, non-empty $A \subseteq \reals$. What can you deduce about $f$?
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Find the boundary, interior, and closure of each of the following subsets of $\reals^2$. \begin{enumerate}[label=(\alph*)]
+        \item $\{ (x, y) \ : \ y = 0 \}$.
+        \item $\{ (x, y) \ : \ x > 0 \text{ and } y \ne 0 \}$.
+        \item $\{ (x, y) \ : \ x \in \q \}$.
+        \item $\{ (x, y) \ : \ x \ne 0 \text{ and } y \leq x^{-1} \}$.
+    \end{enumerate} \vspace{10pt}
+\end{problem}
+
+\begin{problem}
+    For $x = (x_1, ..., x_n) \in \reals^n$, let $|| x|| = \sqrt{x \cdot x}$ be the usual norm, let $||x||_1 = \sum_{i = 1}^n |x_i|$ be the $1$-norm, and let $||x||_{\infty} = \max_{1 \leq i \leq n} |x_i|$ be the max-norm. Prove that, for all $x \in \reals^n$, \begin{equation*}
+        ||x||_{\infty} \leq ||x||_1 \leq ||x|| \leq n ||x||_{\infty}
+    \end{equation*} Deduce that if $U \subseteq \reals^n$ and $V \subseteq \reals^m$ are open, then $U \times V \subseteq \reals^{n+m}$ is open.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Show that, \begin{enumerate}
+        \item For fixed $\alpha \in \reals$, the map $m_{\alpha}: \reals^n \to \reals^n$ given by $m_{\alpha}(x) = \alpha x$ is continuous.
+        \item The map $+: \reals^n \times \reals^n \to \reals^n$ given by $+(x, y) = x + y$ is continuous.
+        \item Linear combinations of continuous functions are continuous.
+        \item The map $d: \reals^n \times \reals^n \to \reals$ given by $d(x, y) = || x- y||$ is continuous.
+    \end{enumerate}
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    We say that $f: \reals^n \to \reals^m$ is open if $f(U)$ is open whenever $U$ is open. For $1\leq i\leq n$, let $\pi_i : \reals^n \to \reals$ be the map $x \mapsto x_i$. Show that $\pi_i$ is both continuous and open.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Show that $f: \reals \to \reals$ given by $f(x) = \sqrt{|x|}$ is continuous.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $\{x_n\}_{n \in \nats} \subseteq \reals^n$ is a sequence. Then, \begin{equation*}
+        \lim_{n \to \infty} x_n = 0 \iff \lim_{n \to \infty} ||x_n|| = 0
+    \end{equation*}
+\end{problem}
+
+\begin{problem}
+    Suppose $A \subseteq \reals^n$ is not closed. Find a function $f: A \to \reals$ which is continuous and unbounded.
+
+    Hint: Try $f(x) = ||y - x||^{-1}$ for a suitable choice of $y$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    We say that $f: \reals^n \to \reals^m$ is finite-to-one if $|f^{-1}(\{y\})| < \infty \ \forall y \in \reals^m$. In this case, is $f$ necessarily continuous?
+
+    Hint: Consider $f(x) = x$ if $x \in \q$ and $f(x) = x + 1$ if $x \not\in \q$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $f: \reals \to \reals$ has the property that $|f(x) - f(y)| \leq C |x - y|^{\alpha}$ for all $x, y \in \reals^n$ and some constants $C \in \reals$ and $\alpha > 1$. Prove that $f$ is constant.
+
+    Hint: For $x, y \in \reals$ with $x < y$, divide $[x, y]$ into $N$ subintervals, construct a telescoping sum, and then take absolute values to show that $|f(y) - f(x)| \leq C|y-x|^{\alpha}N^{1 - \alpha}$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Let $\mathcal{F} = \{ f_i : \reals \to \reals \}_{i \in I}$ be a family of continuous functions. Let $V(\mathcal{F})$ be the set of points for which the $f_i$ simultaneously vanish, i.e. $f_i(x) = 0$. Then, \begin{enumerate}
+        \item $V(\mathcal{F})$ is closed.
+        \item If $C$ is closed, then there is a continuous function $f$ such that $C = V(\{f\})$.
+    \end{enumerate} Hint: Consider $f(x) = e^{(x-a)^{-1}(x-b)^{-1}}$ for $x \in (a,b)$ and $f(x) = 0$ otherwise.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $C_1, C_2 \subseteq \reals^n$ are disjoint closed sets. Find $U_1, U_2 \subseteq \reals^n$ disjoint open sets such that $C_1 \subseteq U_1$ and $C_2 \subseteq U_2$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Let $\{x_n\}_{n \in \nats}$ be a sequence. Show, \begin{equation*}
+        \lim_{n \to \infty} x_n = x \iff \forall U \subseteq \reals^n \text{ open with } x \in U ,\ \exists N \in \nats \text{ such that } n > N \implies x_n \in U
+    \end{equation*}
+\end{problem}
+
+\begin{problem}
+    Show that if $A \subseteq B \subseteq \reals^n$ then $\overline{A} \subseteq \overline{B}$. Further, if for each $i \in I$, $U_i \subseteq \reals^n$ is open, we have that $\overline{\bigcup_{i \in I} U_i} \supseteq \bigcup_{i \in I} \overline{U_i}$, with equality when $I$ is finite.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Show that $\Delta = \{ (x,x) \ : \ x \in \reals^n \} \subseteq \reals^{2n}$ is closed.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Is it true that, if $U \subseteq \reals$ is open, we have $U = \interior (\overline{U})$?
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Fix $x, y > 0$. Define two sequences by $a_1 = \max \{ x,y \}, \ g_1 = \min \{ x, y \}$, $\ a_{n+1} = (a_n + g_n)/2 , $ and $g_{n+1} = \sqrt{a_ng_n}$. Prove that, \begin{equation*}
+        \lim_{n \to \infty} a_n = \lim_{n \to \infty} g_n
+    \end{equation*} Hint: First prove the AM-GM inequality.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $f, g: \reals \to \reals$ are continuous functions such that $f(x) = g(x)$ when $x \in D$, where $D$ is dense in $\reals$. Prove that $f(x) = g(x)$ for all $x \in \reals$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Suppose $f: \reals^n \to \reals^m$ is continuous, show that the graph of $f$, denoted by $\Gamma(f) = \{ (x, f(x)) \ : \ x \in \reals^n \}$ is closed.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Similarly to the definiton of an open map, we say that $f: \reals^n \to \reals^m$ is a closed map if $f(C)$ is closed when $C$ is closed. Show that the map $\pi_1: \reals^2 \to \reals$ as defined in \textbf{Problem 12} is NOT closed.
+
+    Hint: Consider $\{ (x, y) \in \reals^2 \ : \ xy = 1 \}$.
+\end{problem} \vspace{10pt}
+
+\begin{problem}
+    Show that the map $M(x, y) = \max \{ x, y\}$ is continuous.
+\end{problem} 
+
+\end{document}
