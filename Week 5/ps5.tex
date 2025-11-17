@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{defin}{Definition}
+\newtheorem{problem}{Problem}
+
+\author{Isaac Clark}
+\title{Problem Set 5}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Suppose $X, Y \subseteq \reals^n$ are connected. Is $\varnothing \ne X \cap Y$ also connected?
+\end{problem}
+
+\begin{problem}
+    Suppose $U \subseteq \reals^n$ is open and connected. Prove it is also path-connected.
+\end{problem}
+
+\begin{problem}
+    Let $U \subseteq \reals$ be open and $f: U \to \reals$ be a differentiable function such that $f' \equiv 0$. Show that $f$ is locally constant. Does this mean $f$ is constant?
+\end{problem}
+
+\begin{problem}
+    A subset $X \subseteq \reals^n$ is called extremally disconnected if $\overline{U}$ is open in $X$ whenever $U$ is open in $X$. Then, \begin{enumerate}
+        \item Show that every extremally disconnected is totally disconnected.
+        \item Show that $\q$ and $\{ 0 \} \cup \{ 1/n \ | \ n \in \ints^+\}$ are not extremely disconnected.
+        \item Show that every discrete space is also extremally disconnected.
+        \item Show the converse of (3). \textit{Hint:} Use (2).
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Prove or disprove: if $X$ is totally disconnected then $X$ is disconnected.
+\end{problem}
+
+\begin{problem}
+    A topological space is called hyperconnected or anti-Hausdorff, if it cannot be written as the union of any proper open sets. Find all hyperconnected subsets of $\reals^n$. \textit{Hint:} Show that any two open subsets of such a space must intersect non-trivially.
+\end{problem}
+
+\end{document}

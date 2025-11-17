@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+\newcommand{\pref}[1]{\textbf{Proposition~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{defin}{Definition}
+
+\numberwithin{thm}{section}
+\numberwithin{lemma}{section}
+\numberwithin{prop}{section}
+\numberwithin{defin}{section}
+
+\author{Isaac Clark}
+\title{Handout 5}
+
+\begin{document}
+
+\maketitle
+
+\end{document}
