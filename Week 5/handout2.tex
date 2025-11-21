@@ -80,8 +80,168 @@
 
 \section{Towards compactness}
 
+The notion of connectedness, besides being a very visual concept which also subsumes the intermediate value theorem, allowed us to take a local property of a continuous function, i.e. being locally constant, and turn it into a global property, i.e. if a continuous function on a connected domain is locally constant, then it is constant. We now seek, in a similar vein, to find a suitable definition for a set such that, when it is the domain of a continuous function, allows us to turn other local properties into global properties. For example, what kind of domain forces a continuous function to be uniformly continuous? Well, let's first consider the converse problem, i.e. which kinds of functions can be uniformly continuous?
+
 \begin{defin}
-    We say that a set $X \subseteq \reals^n$ is limit point compact 
+    Suppose $A \subseteq \reals^n$. We say that $f: A \to \reals^m$ is uniformly continuous if, $\forall \varepsilon > 0 \ \exists \delta > 0$ such that $\forall x, y \in A$ we have $||x-y|| < \delta \implies ||f(x) - f(y)|| < \varepsilon$.
 \end{defin}
+
+\textit{Note:} the order of the quantifiers matters! In the usual definition of continuity, $\delta$ is allowed to depend on $x$ and $\varepsilon$; whereas in the definition of uniform continuity, $\delta$ may only depend on $\varepsilon$. As far as the $x$ are concerned, ``there is one $\delta$ to rule them all''.
+
+\begin{prop}
+    If $f: A \to \reals^m$ is uniformly continuous, then it is continous.
+\end{prop}
+
+\begin{prop}
+    Suppose $f: A \to \reals^m$ is uniformly continuous and $\{a_n\}_{n\in\nats} \subseteq A$ is a Cauchy sequence. Then, $\{f(a_n)\}_{n\in\nats}$ is a Cauchy sequence.
+\end{prop}
+\begin{proof}
+    Let $\varepsilon > 0$ be given. Since $f$ is uniformly continuous, there exists $\delta > 0$ such that $||x-y|| < \delta \implies ||f(x)-f(y)|| < \varepsilon$ for all $x, y \in A$. Since $\{a_n\}_{n\in\nats}$ is Cauchy, there exists some $N \in \nats$ such that for all $n, m \geq N$, $||a_n - a_m|| < \delta$. Taken together, for all $n, m \geq N$, $||f(a_n) - f(a_m)|| < \varepsilon$, whence $\{f(a_n)\}_{n\in\nats}$ is Cauchy.
+\end{proof}
+
+Since we also expect that our property will be a topological invariant, this tells us that, if every continuous function on $K$ where uniformly continuous, then no two points could be sent ``too far apart'', whence $K$ doesn't contain points which are ``too far apart''. So, this suggests some sort of ``smallness'' condition.
+
+\section{Candidate definitions}
+
+\begin{defin}
+    We say that a set $X \subseteq \reals^n$ is limit point compact if every infinite subset of $X$ has an accumulation point in $X$.
+\end{defin}
+
+\begin{defin}
+    We say that a set $X \subseteq \reals^n$ is totally bounded if for all $\varepsilon > 0$ there exist some $x_1, ..., x_n \in \reals^n$ such that $X \subseteq \bigcup_{k = 1}^n B_{\varepsilon}(x_k)$.
+\end{defin}
+
+\begin{defin}
+    We say that a set $X \subseteq \reals^n$ is sequentially compact if every sequence in $X$ has a subsequence which converges in $X$.
+\end{defin}
+
+All of these definitions encapsulate a sort of ``smallness'' condition. In fact, historically the proposed definition of compactness was \textbf{Definition 2.1}. However, while $(0, 1]$ is totally bounded, the map $x \mapsto 1/x$ is continuous on $(0, 1]$ but is not uniformly continuous, so this isn't quite what we are looking for. There are some hurdles with the other definitions as well.
+
+\begin{prop}\label{LimitPointCompactCharacterization}
+    $X \subseteq \reals^n$ is limit point compact if and only if all closed, discrete subspaces of $X$ are finite. Equivalently, $X$ is not limit point compact if and only if there is a infinite, closed, discrete subspace of $X$.
+\end{prop}
+\begin{proof}
+    Recall that any closed set may be written as the disjoint union of its isolated points and its limit points. If a closed subspace $A \subseteq X$ did not have a limit point in $X$ then all of its limit points must be isolated, and so $A$ must be discrete. So, if all of these discrete spaces are finite and $X$ were not limit point compact, then there would be an subset, say $A \subseteq X$ with no limit point in $X$, per the above, this would mean that $A$ is discrete. But then $\overline{A} = A$ so $A$ is an infinite, closed, discrete subspace of $X$, a contradiction. Conversely, if $X$ were limit point compact and $A \subseteq X$ were infinite, closed, and discrete, then $A$ would have a limit point in $X$. Since $A$ is closed, this would be a limit point of $A$. But, since $A$ is discrete, $A$ has no limit points, a contradiction.
+\end{proof}
+
+As shown in Handout 3, every discrete subset of $\reals^n$ is countable. And so we can relax \pref{LimitPointCompactCharacterization} to require instead that $X$ has no countably infinite discrete subspace of $X$. But this is really a constraint on the sequences of $X$. This is more or less confirmed by the following theorem. \newpage
+
+\begin{thm}
+    $X$ is limit point compact if and only if $X$ is sequentially compact.
+\end{thm}
+\begin{proof}
+    ($\implies$) Suppose $X$ is limit point compact and let $\{x_n\} \subseteq X$ be a sequence in $X$. Let $S = \{ x_n \ | \ n \in \nats\}$. If $S$ is finite, then some point, say $x$, repeats infinitely often, and so the constant subsequence $x$ converges in $X$. If $S$ is infinite then, since $X$ is limit point compact, $S$ has a limit point, say $x \in X$. For each $k \in \ints^+$, put $B_k = B_{1/k}(x)$. As shown in Handout 2, since $x$ is a limit point of $S$, every open neighbourhood of $x$ contains infinitely many points in $S$, and so for each $k \in \ints^+$ we can find some $x_{n_k} \in B_k$. Then $||x_{n_k} - x|| \to 0$ as $k \to \infty$ and so $x_{n_k} \to x$ is a subsequence of the $x_n$ which converges to a point in $X$.
+
+    ($\impliedby$) Suppose $X$ is sequentially compact and let $A \subseteq X$ be a infinite subset of $X$. Since $A$ is infinite, we may pick a sequence, say $\{a_n\}_{n\in\nats}$ of different elements in $A$. Since $X$ is sequentially compact, there is a subsequence of the $a_n$, say $\{a_{n_k}\}_{k \in \nats}$ which converges to some $x \in X$. Then, since there is a sequence of different elements of $X$ which converge to $x$, every open neighbourhood of $x$ contains infinitely many points of $A$, whence it is a limit point of $A$.
+\end{proof}
+
+In some sense, this means that we are on the right track, especially since, as was shown in Handout 2, sequential compactness is a topological invariant. Further evidence to this effect is given by our question of when continuous implies uniformly continuous; since Cauchy sequences in a sequentially compact set certainly converge within the space. And so it may seem like this is a satisfactory answer. However...
+
+\begin{defin}
+    We say that $f: X \to \reals^m$ is locally bounded if for all $x \in X$, there exists an open neighbourhood $U$ of $x$ such that $f|_U$ is bounded.
+\end{defin}
+
+\begin{thm}
+    Suppose $K \subseteq \reals^n$ is sequentially compact and that $f: K \to \reals^m$ is locally bounded and continuous. Then, $f$ is bounded. 
+\end{thm}
+
+The statement of the theorem is true; but as written it is relatively difficult to prove.
+
+\section{Open covers, compactness}
+
+Let's consider a naive approach to prove the (false) proposition that every continuous, locally bounded function, say $f: X \to \reals^m$ is bounded. Well, for each $x \in X$, pick some $\varepsilon_x > 0$ such that $f$ restricted to $X \cap B_{\varepsilon_x}(x)$ is bounded, say by $M_x$. Then, $X \subseteq \bigcup_{x \in X} B_{\varepsilon_x}(x)$, and so for any $x \in X$, $||f(x)|| \leq \max_{x \in X} M_x$. Of course, this ``proof'' fails because $\max_{x \in X} M_x$ need not be finite. But there is something to glean from this effort. Namely, that if we only needed to consider finitely many $M_x$, then this would resurect the proof.
+
+\begin{defin}
+    A cover of $X \subseteq \reals^n$ is a family of sets $\{U_i\}_{i \in I}$ such that $X \subseteq \bigcup_{i \in I} U_i$. We say that $\{ U_i\}_{i \in I}$ is an open cover if, in addition, each $U_i$ is open.
+\end{defin}
+
+\begin{defin}
+    We say that $\{V_j\}_{j \in J}$ is a subcover of $\{U_i\}_{i \in I}$ if $\{V_j\}_{j \in J} \subseteq \{U_i\}_{i \in I}$ and $\{V_j\}_{j\in J}$ is a cover of $X$.
+\end{defin}
+
+\begin{defin}
+    $X \subseteq \reals^n$ is compact if every open cover of $X$ admits a finite subcover.
+\end{defin}
+
+\textit{Remark}. Make sure you understand the subtlety of \textbf{Definition 3.3}. It does not assert that there exists a finite cover of $X$ (indeed, every set admits a finite cover), but that every cover, no matter how large or the contents thereof, admits a finite subset which also covers $X$.
+
+\begin{prop}
+    Finite sets are compact.
+\end{prop}
+\begin{proof}
+    For each element in $X$, pick an open set in the cover which contains it. Since there are only finitely many elements, this selects only finitely many sets from the open cover, and so this yields a finite subcover.
+\end{proof}
+
+\begin{prop}
+    $\ints$ is not compact.
+\end{prop}
+\begin{proof}
+    Recall that $\ints$ is discrete, and so for each $n \in \ints$, $\{n \}$ is open in $\ints$, and so $\{ \{n\} \}_{n \in \ints}$ is an open cover of $\ints$. But $\ints$ is infinite, so no finite subcover exists.
+\end{proof}
+
+\begin{thm}
+    $[0, 1]$ is compact.
+\end{thm}
+
+\begin{thm}
+    If $f: X \to \reals^m$ is compact and $X$ is compact, then $f(X)$ is compact.
+\end{thm}
+
+\begin{thm}
+    If $X \subseteq \reals^n$ is compact and $K \subseteq X$ is closed, then $K$ is compact.
+\end{thm}
+
+\begin{thm}
+    If $X \subseteq \reals^n$ is compact then $X$ is closed and bounded.
+\end{thm}
+
+\begin{lemma}
+    (Tube Lemma) Suppose $X \subseteq \reals^n$ and $Y \subseteq \reals^m$ and that $N \subseteq X \times Y$ is open. Then, if $\{x \} \times Y \subseteq N$ for some $x \in X$, then there is an open neighbourhood $U$ of $x$ such that $U \times Y \subseteq N$.
+\end{lemma}
+
+\begin{thm}
+    If $X \subseteq \reals^n$ and $Y \subseteq \reals^m$ are compact, then $X \times Y$ is compact.
+\end{thm}
+
+\begin{lemma}
+    If $X \subseteq \reals^n$ is bounded, then $\exists N \geq 0$ such that $X \subseteq [-N, N]^n$.
+\end{lemma}
+
+\begin{thm}
+    (Heine-Borel) $X \subseteq \reals^n$ is compact if and only if it is closed and bounded.
+\end{thm}
+
+\textbf{Corollary}. $X$ is compact $\iff X$ is sequentially compact.
+
+\begin{prop}
+    $\overline{X}$ is compact if and only if $X$ is totally bounded.
+\end{prop}
+
+\begin{thm}
+    (Extreme Value Theorem) If $f: K \to \reals$ is continuous and $K \subseteq \reals^n$ is compact then there exist $m, M \in \reals$ such that $m \leq f(x) \leq M$ for all $x \in K$. Moreover, there exist $a, b \in K$ such that $f(a) = m$ and $f(b) = M$.
+\end{thm}
+
+\begin{thm}
+    ($\varepsilon$-neighbourhood Theorem)
+\end{thm}
+
+\begin{thm}
+    Suppose $f: K \to \reals^m$ is continuous and $K \subseteq \reals^n$ is compact. Then $f$ is uniformly continuous.
+\end{thm}
+
+\begin{thm}
+    Suppose $f: K \to \reals^m$ is continuous and $K \subseteq \reals^n$ is compact. Then, \begin{enumerate}
+        \item $f$ is uniformly continuous.
+        \item If $f$ is also locally bounded, then $f$ is bounded.
+    \end{enumerate}
+\end{thm}
+
+\begin{thm}
+    If $f: [a, b] \to \reals$ is continuous, then it is integrable.
+\end{thm}
+
+\begin{thm}
+    Suppose $U \subseteq \reals^n$ is open. Then, there exists a sequence of compact sets $K_i \subseteq \reals^n$ such that $K_i \subseteq K_{i+1}$ for each $i \in \nats$ and $U = \bigcup_{i = 0}^{\infty} K_i$.
+\end{thm}
 
 \end{document}
