@@ -1,0 +1,155 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{defin}{Definition}
+\newtheorem{problem}{Problem}
+
+\author{Isaac Clark}
+\title{Problem Set 6}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Fix $U, V \subseteq \reals^n$. Let $d(U, V) = \inf \{ ||x-y|| \ | \ x \in U , \ y \in V\}$. Show that, \begin{enumerate}
+        \item $d(U, V) = 0$ if $\overline{U}\cap V \ne \varnothing$ or $U \cap \overline{V} \ne \varnothing$.
+        \item If $U$ is compact, $V$ is closed, and $U \cap V = \varnothing$, then $d(U, V) > 0$.
+        \item Find closed $U, V$ such that $U \cap V = \varnothing$ but $d(U, V) = 0$.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Recall that $B \subseteq \reals^n$ is convex if the line segment joining any two points of $B$ lies in $B$. Show that, \begin{enumerate}
+        \item If $B \subseteq \reals^n$ is convex and compact and $x \not\in B$, then there exists an $(n-1)$-dimensional affine subspace of $\reals$ (i.e. the image of an $(n-1)$-dimensional vector subspace of $\reals^n$ under a translation) such the $x$ and $B$ lie on opposite sides of $H$.
+        \item If $A \subseteq \reals^n$ is compact, then there is a unique convex subset $B$ of $\reals^n$ such that $A \subseteq B$ and $B$ lies in any compact convex subset of $\reals^n$ containing $A$. Show also that $B$ is compact. $B$ is called the convex hull of $A$.
+        \item Show that a point $x$ lies in the convex hull of a compact set $A$ if and only if, for every $(n-1)$-dimensional affine subspace $H$ with $A$ on one side of $H$, $x$ lies on the same side.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Let $X$ be a compact subset of $\reals^n$ and let $\cover$ be an open cover of $X$. Show that, \begin{enumerate}
+        \item $X \subseteq B_1 \cup \cdots B_k$ for some $k$, where each $B_i$ is a closed ball in some $U = U_i \in \cover$.
+        \item There exists $\varepsilon > 0$ such that, for all $x \in X$, $B_{\varepsilon}(x) \subseteq U$ for some $U \in \cover$.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Suppose $U \subseteq \reals^n$ is open and $C \subseteq U$ is compact. Show that there exists a compact set $K$ such that $C$ lies in the interior of $K$ and $K \subseteq U$.
+\end{problem}
+
+\begin{problem}
+    Suppose $A, B \subseteq X$ are disjoint, compact subsets of some $X \subseteq \reals^n$. Show that there exists disjoint open sets $U$ and $V$ such that $A \subseteq U$ and $B \subseteq V$.
+\end{problem}
+
+\begin{problem}
+    Suppose $f: X \to \reals^m$ is continuous and that $X$ is compact. Show that $f$ is a closed map. Deduce that if $f$ is bijective, then it is a homeomorphism.
+\end{problem}
+
+\begin{problem}
+    Suppose $X \subseteq \reals^n$ and $Y \subseteq \reals^m$. Let $A \subseteq X$ and $B \subseteq Y$ be compact subsets thereof. Let $W = U \times V$ be an open set which contains $A \times B$. Show that there are open sets $U \subseteq \reals^n$ and $V \subseteq \reals^m$ such that $A \times B \subseteq U \times V \subseteq W$.
+\end{problem}
+
+\begin{problem}
+    Let $X \subseteq \reals^n$ be compact and let $\{\cover_n\}_{n\in\nats}$ be a sequence of open covers of $X$ such that $\cover_n \subseteq \cover_{n+1}$ for all $n \in \nats$. Show that there is a sequence of finite subcovers, say $\{\cover^f_n\}_{n\in\nats}$, such that $\cover^f_n \subseteq \cover^f_{n+1}$.
+\end{problem}
+
+\begin{problem}
+    Given $\{ X_i \}_{i \in I}$ a family of compact sets in $\reals^n$, is $\bigcap_{i \in I} X_i$ is compact?
+\end{problem}
+
+\begin{problem}
+    Let $\{ K_n\}_{n \in \nats}$ be a sequence of non-empty, compact sets in $\reals^n$ such that $K_{n+1} \subseteq K_n$ for each $n \in \nats$. Show that $\bigcap_{n \in \nats} K_i$ is nonempty.
+\end{problem}
+
+\begin{problem}
+    Let $\{ K_i \}_{i \in I}$ be a family of compact subsets of $[0, 1]$ such that for every finite subset $F \subseteq I$, $\bigcap_{i \in F} K_i \ne \varnothing$. Prove that $\bigcap_{i\in I} K_i \ne \varnothing$.
+\end{problem}
+
+\begin{problem}
+    Show that a discrete subset is compact if and only if it is finite.
+\end{problem}
+
+\begin{problem}
+    Suppose $X \subseteq \reals^n$ and $Y \subseteq \reals^m$ with $Y$ compact. Then, \begin{enumerate}
+        \item The projection $\pi: X \times Y \to X$ is closed.
+        \item If $f: X \to Y$ is such that $\Gamma(f)$ is closed, then $f$ is continuous.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Show that, \begin{enumerate}
+        \item $\Delta^n = \{ (x_0, ..., x_n) \in \reals^{n+1} \ | \ \sum_{i = 0}^n x_i = 1 , \ x_i \geq 0 \text{ for all } i \}$.
+        \item $E = \{ (x,y)\in\reals^2 \ | \  x^2 + xy + y^2 = 1\}$.
+        \item $\heartsuit = \{(x, y) \in \reals^2 \ | \ (x^2 + y^2 + ax)^2 = a^2(x^2 + y^2)$\}, for $a > 0$.
+    \end{enumerate} are compact.
+\end{problem}
+
+\begin{problem}
+    We say that $A \subseteq \reals^n$ is Lindelöf if every open cover of $A$ admits a countable subcover. Show that, in fact, every subset of $\reals^n$ is Lindelöf.
+\end{problem}
+
+\begin{problem}
+    We say that $A \subseteq \reals^n$ is countably compact if every countable open cover of $A$ has finite subcover. Show that there does not exist a subset of $\reals^n$ which is countably compact but not compact. \textit{Hint:} Limit points.
+\end{problem}
+
+\end{document}
