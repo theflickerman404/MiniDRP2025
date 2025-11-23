@@ -165,7 +165,7 @@ Let's consider a naive approach to prove the (false) proposition that every cont
 
 \textit{Remark}. Make sure you understand the subtlety of \textbf{Definition 3.3}. It does not assert that there exists a finite cover of $X$ (indeed, every set admits a finite cover), but that every cover, no matter how large or the contents thereof, admits a finite subset which also covers $X$.
 
-\begin{prop}
+\begin{prop}\label{FiniteAreCompact}
     Finite sets are compact.
 \end{prop}
 \begin{proof}
@@ -179,69 +179,154 @@ Let's consider a naive approach to prove the (false) proposition that every cont
     Recall that $\ints$ is discrete, and so for each $n \in \ints$, $\{n \}$ is open in $\ints$, and so $\{ \{n\} \}_{n \in \ints}$ is an open cover of $\ints$. But $\ints$ is infinite, so no finite subcover exists.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{[0,1]IsCompact}
     $[0, 1]$ is compact.
 \end{thm}
+\begin{proof}
+    Let $\cover$ be an open cover of $[0, 1]$ and let $S$ be the set of points $x$ in $[0, 1]$ such that $[0, x]$ can be covered by finitely many elements of $\cover$. By \pref{FiniteAreCompact}, $0 \in S$, and $S$ is bounded above by $1$, whence $S$ has a supremum, say $s$. If $s = 0$, then, again by \pref{FiniteAreCompact}, $[0, s]$ can be covered by finitely many sets in $\cover$. If $s > 0$, let $U_s \in \cover$ be a set containing $s$. Since $U_s$ is open, there exists some $\varepsilon > 0$ such that $(s - \varepsilon, s] \subseteq U_s$. By definition, there is a finite subcover of $[0, s - \varepsilon/2]$, and adding $U_s$ to this subcover yields a finite subcover of $[0, s]$. Now suppose, for a contradiction, that $s < 1$. Let $U_s \in \cover$ be a set containing $s$. Then, since $U_s$ is open, there exists some $\varepsilon > 0$ such that $[s, s + \varepsilon) \subseteq U_s$. By the above, we may take a finite subcover of $[0, s]$ and add to it $U_s$ to produce a finite subcover of $[0, s + \varepsilon/2]$, contradicting that $s$ is the supremum of $S$, whence $s = 1$. Hence, $[0, 1]$ is compact.
+\end{proof} \newpage
 
-\begin{thm}
-    If $f: X \to \reals^m$ is compact and $X$ is compact, then $f(X)$ is compact.
+\begin{thm}\label{ImageOfCompactIsCompact}
+    If $f: X \to \reals^m$ is continuous and $X$ is compact, then $f(X)$ is compact.
 \end{thm}
+\begin{proof}
+    Let $\cover$ be an open cover of $f(X)$. Let $\cover_X = \{ f^{-1}(U) \ | \ U \in \cover \}$. Then, for every $x \in X$, since $\cover$ is a cover of $f(X)$, there exists some $U \in \cover$ such that $f(x) \in U$, then $x \in f^{-1}(U)$, whence $\cover_X$ is a cover of $X$. Since $f$ is continuous, each $f^{-1}(U)$ is open, and so $\cover_X$ is an open cover of $X$. Since $X$ is compact, there exists a finite subcover of $\cover_X$, say $f^{-1}(U_0), ..., f^{-1}(U_k)$ for some $k \in \nats$ and $U_i \in \cover$. But then, since each element in $X$ lies in some $f^{-1}(U_i)$, each $f(x)$ lies in some $U_i$, so $U_0, ..., U_k$ is a finite subcover of $X$. Since $\cover$ was arbitrary, $f(X)$ is compact.
+\end{proof}
 
-\begin{thm}
+\begin{thm}\label{ClosedInCompactIsCompact}
     If $X \subseteq \reals^n$ is compact and $K \subseteq X$ is closed, then $K$ is compact.
 \end{thm}
+\begin{proof}
+    Let $\cover$ be an open cover of $K$. For each $U \in \cover$, since it is open in $K$, it is of the form $U' \cap K$ for some $U'$ an open subset of $X$, let $\cover' = \{ U' \ | \ U \in \cover \}$. Then, $\cover_X = \cover' \cup \{ X \setminus K \}$ is an open (each $U \in \cover$ is open and $X \setminus K$ is open since $K$ is closed) cover (either $x \in K$ or $x \not\in K$ for all $x \in X$) of $X$, and so it has a finite subcover, say $U_0, ..., U_k$ for some $k \in \nats$ and $U_i \in \cover_X$. Then, $K \cap U_0 , ..., K \cap U_k$ is a finite subcover of $K$. Since $\cover$ was arbitrary, $K$ is compact.
+\end{proof}
 
-\begin{thm}
-    If $X \subseteq \reals^n$ is compact then $X$ is closed and bounded.
-\end{thm}
+\begin{prop}\label{CompactIsClosedAndBounded}
+    If $K \subseteq \reals^n$ is compact then $K$ is closed and bounded.
+\end{prop}
+\begin{proof}
+    For boundedness, we may observe that $\cover = \{B_n(0) \ | \ n \in \nats\}$ is such that $\bigcup_{U \in \cover} U = \reals^n$, whence it is an open cover of $K$. Since $K$ is compact, there is a finite subcover, say $\cover_f$, and so a maximal $n \in \nats$ such that $B_n(0)$ is in the subcover, say $N$. Then $K \subseteq \bigcup_{U \in \cover_f} U = B_N(0)$, and so $K$ is bounded.
 
-\begin{lemma}
-    (Tube Lemma) Suppose $X \subseteq \reals^n$ and $Y \subseteq \reals^m$ and that $N \subseteq X \times Y$ is open. Then, if $\{x \} \times Y \subseteq N$ for some $x \in X$, then there is an open neighbourhood $U$ of $x$ such that $U \times Y \subseteq N$.
+    Let $x \in \reals^n \setminus K$ For every $a \in K$, let $U_a = B_{r_a}(a)$ and $V_a = B_{r_a}(x)$, where $r_a = ||x-a||/2$. Clearly $U_a$ and $V_a$ are disjoint open neigbourhoods of $a$ and $x$ respectively. Then, $\cover = \{ U_a \ | \ a \in K\}$ is an open cover of $K$, and so, since $K$ is compact, there exists a finite subcover, say $U_{a_1}, ..., U_{a_k}$. Then, $V_{a_1} \cap \cdots V_{a_k}$ is an open neighbourhood of $x$ which is disjoint from $K$, whence $\reals^n \setminus K$ is open. Hence, $K$ is closed.
+\end{proof}
+
+\begin{lemma}\label{TubeLemma}
+    (Tube Lemma) Suppose that $X \subseteq \reals^n$, $Y \subseteq \reals^m$ is compact, and that $N \subseteq X \times Y$ is open. Then, if $\{x \} \times Y \subseteq N$ for some $x \in X$, then there is an open neighbourhood $U$ of $x$ such that $U \times Y \subseteq N$.
 \end{lemma}
+\begin{proof}
+    Let $\cover_x$ be the set of all open neighbourhoods of $x$. For $U \in \cover_x$, let $V_{U}$ be the largest (read: union of all) open subset of $Y$ such that $U \cap V \subseteq N$. Then, $\cover = \{V_{U}  \ | \  U \in \cover_x \}$ is an open cover of $Y$ and so, since $Y$ is compact, there is a finite subcover, say $V_{U_1}, ..., V_{U_k}$. Then $U = U_1 \cap \cdots U_k$ is as desired; since $U \subseteq U_i$ implies $V_{U_i} \subseteq V_{U}$, so $Y = \bigcup_{i=1}^k V_{U_i} \subseteq V_{U}$ and so $U \times Y \subseteq U \times V_U \subseteq N$.
+\end{proof}
 
-\begin{thm}
+\begin{thm}\label{Tychnoff}
     If $X \subseteq \reals^n$ and $Y \subseteq \reals^m$ are compact, then $X \times Y$ is compact.
 \end{thm}
+\begin{proof}
+    Let $\cover$ be an open cover of $X \times Y$. Let $\mathcal{B}$ be the collection of open subsets of $X \times Y$ which are the union of finitely many elements of $\cover$. For each $x \in X$, the map $y \mapsto \{x\} \times Y$ exhibits, per \tref{ImageOfCompactIsCompact}, $\{x\} \times Y$ as compact, so there is some $B \in \mathcal{B}$ such that $\{x \} \times Y \subseteq B$, whence there is $U \in \cover_x$ with $U \times Y \subseteq B$ by \lref{TubeLemma}. Then, the collection of all open subsets of $X$ such that $U \times Y \subseteq B$ for some $B \in \mathcal{B}$ is an open cover of $X$, whence there is, by compactness of $X$, a finite subcover $U_1, ..., U_k$ for which $U_1 \times Y \subseteq B_i$ for some $B_i \in \mathcal{B}$. Then $B_1 \cup \cdots \cup B_n \in \mathcal{B}$ and is all of $X \times Y$, so exhibits a finite subcover of $X \times Y$. Since $\cover$ was arbitrary, $X \times Y$ is compact.
+\end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{BoundedFitsInBox}
     If $X \subseteq \reals^n$ is bounded, then $\exists N \geq 0$ such that $X \subseteq [-N, N]^n$.
 \end{lemma}
+\begin{proof}
+    This is by equivalence of $||\cdot||_{\infty}$ and $||\cdot||$. See the solutions manual.
+\end{proof}
 
-\begin{thm}
+\begin{thm}\label{Heine-Borel}
     (Heine-Borel) $X \subseteq \reals^n$ is compact if and only if it is closed and bounded.
 \end{thm}
+\begin{proof}
+    ($\implies$) This is \pref{CompactIsClosedAndBounded}.
+
+    ($\impliedby$) If $X$ is closed and bounded, then per \lref{BoundedFitsInBox}, there exists some $N \geq 0$ such that $X \subseteq [-N, N]^n$. Then, the map $t \mapsto 2Nt - N$ from $[0, 1] \to [-N, N]$ exhibits, by \tref{[0,1]IsCompact} and \tref{ImageOfCompactIsCompact}, $[-N, N]$ as compact. By \tref{Tychnoff}, this means $[-N, N]^n$ is compact. Then, $X$ is a closed (since $X \cap [-N, N]^n = X$) subset of $[-N, N]^n$, so by \tref{ClosedInCompactIsCompact}, $X$ is compact.
+\end{proof}
 
 \textbf{Corollary}. $X$ is compact $\iff X$ is sequentially compact.
+\begin{proof}
+    By Handout 2, $X$ is sequentially compact if and only if $X$ is closed and bounded. By \tref{Heine-Borel}, $X$ is compact if and only if $X$ is closed and bounded.
+\end{proof}
 
 \begin{prop}
     $\overline{X}$ is compact if and only if $X$ is totally bounded.
 \end{prop}
+\begin{proof}
+    ($\impliedby$) If $X$ is totally bounded then, in particular, $X$ is the finite union of bounded sets and so is bounded, so by \pref{BoundedFitsInBox}, there is some $N \geq 0$ such that $X \subseteq [-N, N]^n$. Then $\overline{X} \subseteq \overline{[-N, N]^n} = [-N, N]^n$ so $\overline{X}$ is a closed subset of a compact set, so by \tref{ClosedInCompactIsCompact}, $\overline{X}$ is compact.
 
-\begin{thm}
-    (Extreme Value Theorem) If $f: K \to \reals$ is continuous and $K \subseteq \reals^n$ is compact then there exist $m, M \in \reals$ such that $m \leq f(x) \leq M$ for all $x \in K$. Moreover, there exist $a, b \in K$ such that $f(a) = m$ and $f(b) = M$.
+    ($\implies$) Suppose $\overline{X}$ is compact. Then, for all $\varepsilon > 0$, $\cover_{\varepsilon} = \{ B_{\varepsilon} (x) x \in \overline{X} \}$ is an open cover of $\overline{X}$, and so admits a finite subcover. But then $X \subseteq \overline{X}$ is contained in the finite union of $\varepsilon$ balls. Since $\varepsilon > 0$ was arbitrary, $X$ is totally bounded.
+\end{proof}
+
+\begin{thm}\label{EVT}
+    (Extreme Value Theorem) If $f: K \to \reals$ is continuous and $K \subseteq \reals^n$ is compact then, there exist $m, M \in \reals$ such that $m \leq f(x) \leq M$ for all $x \in K$. Moreover, there exist $a, b \in K$ such that $f(a) = m$ and $f(b) = M$.
+\end{thm}
+\begin{proof}
+    By \tref{ImageOfCompactIsCompact} and \tref{Heine-Borel}, $f(K)$ is closed and bounded. Then, put $M = \sup f(K)$, which exists since $f(K)$ is bounded. Since $f(K)$ is closed, $M \in f(K)$, so there exists some $b \in K$ such that $f(b) = M$. Similarly $m = \inf f(K)$ exists and is attained at some $a \in K$. By definition, $f(K) \subseteq [\inf f(K), \sup f(K)] = [m, M]$.
+\end{proof}
+
+\begin{defin}
+    For $A \subseteq \reals^n$, we define $d(x, A) = \inf_{a \in A} ||x - a||$.
+\end{defin}
+
+\begin{prop}\label{DistanceIsContinuous}
+    Suppose $A \subseteq \reals^n$. Then, the map $x \mapsto d(x, A)$ is continuous.
+\end{prop}
+\begin{proof}
+    Suppose $x, y \in \reals^n$. For any $a \in A$, $||x - a|| \leq ||x-y|| + ||y - a||$. Taking the infimum of each side over $A$ we have $d(x, A) \leq d(y, A) + ||x-y||$. By symmetry, $d(y, A) \leq d(x, A) + ||x-y||$. Hence, $|d(x, A) - d(y, A)| \leq ||x - y||$.
+\end{proof}
+
+\begin{thm}\label{EpsilonNeighbourhood}
+    ($\varepsilon$-neighbourhood Theorem) Suppose $X \subseteq U \subseteq \reals^n$ with $X$ compact and $U$ open. Then, there exists some $\varepsilon > 0$ such that $B_{\varepsilon}(x) \subseteq U$ for all $x \in X$.
 \end{thm}
 
-\begin{thm}
-    ($\varepsilon$-neighbourhood Theorem)
-\end{thm}
+\textit{Note:} As in the definition of uniform continuity, the order of the quatifiers matters! Here, $\varepsilon$ does not depend on $X$.
 
-\begin{thm}
-    Suppose $f: K \to \reals^m$ is continuous and $K \subseteq \reals^n$ is compact. Then $f$ is uniformly continuous.
-\end{thm}
+\begin{proof}
+    Let $f: X \to \reals$ be given by $f(x) = d(x, \reals^n \setminus U)$. Then, since $U$ is open and $X \subseteq U$, for each $x \in X$ there exists some $\delta_x > 0$ such that $B_{\delta_x}(x) \subseteq U$ and so $f(x) \geq \delta_x$. In particular, $f(x) > 0$ for all $x \in X$. By \pref{DistanceIsContinuous}, $f$ is continuous. Since $X$ is compact, by \tref{EVT} $f$ is bounded below and attains its minimum value. Say $\varepsilon$ is the lower bound of $f(X)$. Since $f$ attains its minimum and $f(x) > 0$ on $X$, $\varepsilon > 0$. But then, $d(x, \reals^n \setminus U) \geq \varepsilon$, and so $B_{\varepsilon}(x) \subseteq U$ for any $x \in X$.
+\end{proof} \newpage
 
-\begin{thm}
-    Suppose $f: K \to \reals^m$ is continuous and $K \subseteq \reals^n$ is compact. Then, \begin{enumerate}
+\begin{thm}\label{PropertiesOfContinuousOnCompact}
+    Suppose $f: X \to \reals^m$ is continuous and $X \subseteq \reals^n$ is compact. Then, \begin{enumerate}
         \item $f$ is uniformly continuous.
         \item If $f$ is also locally bounded, then $f$ is bounded.
     \end{enumerate}
 \end{thm}
+\begin{proof}
+    For (1), let $\varepsilon > 0$ be given. Because $f$ is continuous, for each $x \in X$ there exists some $\delta_x > 0$ such that $B_{\delta_x}(x) \subseteq B_{\varepsilon/2}(f(x))$. Then, $\cover = \{ B_{\delta_x/2}(x) \ | \ x \in X\}$ is an open cover of $X$. Since $X$ is compact, it admits a finite subcover, i.e. there exist some $\delta_{x_1}/2, ..., \delta_{x_k}/2$ such that each $x \in X$ is contained in some $B_{\delta_{x_i}}(x_i)$. Now, let $\delta$ be the minimum of the $\delta_{x_i}/2$, which exists and is positive since there are only finitely many $\delta_{x_i}$. Then, suppose $||x - y|| < \delta$. By definition, $x \in B_{\delta_{x_i}/2}(x_i)$ for some $i$. Then, $||x_i - y|| \leq ||x_i - x|| + ||x - y|| < \delta_{x_i}/2 + \delta \leq \delta_{x_i}$, so $y \in B_{\delta_{x_i}}(x_i)$. By definition, $B_{\delta_{x_i}}(x_i) \subseteq B_{\varepsilon/2}(f(x_i))$, so $||f(x) - f(y)|| \leq ||f(x) - f(x_i)|| + ||f(y) - f(x_i)|| < \varepsilon$. Hence, $f$ is uniformly continuous.
+
+    For (2), for each $x \in X$, let $U_x$ be an open neighbourhood of $x$ such that $f$ is bounded by $M_x$ on $U_x$. Then, $\cover = \{U_x \ | \ x \in X\}$ is an open cover of $X$, whence by compactness there is a finite subcover, say $U_1, ..., U_k$. Then, putting $M = \max_{1 \leq i \leq k} M_i$. We have that each $x \in U_i$ for some $i$ and so $|f(x_i)| \leq M_i \leq M$. Hence $f$ is bounded.
+\end{proof}
+
+% \begin{lemma}\label{Summability}
+%     If $\{x_n\}_{n\in\nats} \subseteq \reals^n$ is an absolutely summable sequence, then it is summable.
+% \end{lemma}
+% \begin{proof}
+%     Put $x = \sum_{n=0}^{\infty} ||x_n||$. For any $\varepsilon > 0$, we may pick $N \in \nats$ such that for $m \geq N$, $|x - \sum_{n=0}^m ||x_n|| \ | < \varepsilon$/2. Then, for $m_1 > m_2 \geq N$, \begin{align*}
+%         \bignorm \sum_{n = 0}^{m_1} x_n - \sum_{n=0}^{m_2} x_n \bignorm &= \bignorm \sum_{n=m_2}^{m_1} x_n \bignorm \leq \left| \sum_{n=m_2}^{m_1} ||x_n|| \right| \\
+%         &\leq \left| x- \sum_{n=0}^{m_1} ||x_n|| \right| + \left| x - \sum_{n=0}^{m_2} ||x_n|| \right| \\
+%         &< \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+%     \end{align*} Hence the partial sums are Cauchy and so converge by the completeness of $\reals^n$.
+% \end{proof} \newpage
 
 \begin{thm}
     If $f: [a, b] \to \reals$ is continuous, then it is integrable.
 \end{thm}
 
+\textit{Note:} In MAT157, you will study the theory of integration in much more detail, including a better definition of integrability. Here, we say that $f: [a, b] \to \reals$ is integrable if for all $\varepsilon > 0$, there exists some $n \in \ints^+$ such that $U(f, n) - L(f, n) < \varepsilon$, where $U(f, n)$ and $L(f, n)$ are defined below. In this case, any Riemann sum will converge to the same value which we call $\int_a^b f(x) \ dx$.
+
+\begin{proof}
+    By \tref{Heine-Borel}, $[a, b]$ is compact, and so by \tref{PropertiesOfContinuousOnCompact} $f$ is uniformly continuous on $[a, b]$. Let $\varepsilon > 0$ be given. For $n \in \ints^+$ and $1 \leq i \leq n$, we put $x_i = a + (b-a)(i-1)/n$. We define: \begin{align*}
+        U(f, n) &= \sum_{i = 1}^n \frac{b-a}{n} \sup_{x \in [x_i, x_{i+1}]} f(x) \\
+        L(f, n) &= \sum_{i = 1}^n \frac{b-a}{n} \inf_{x \in [x_i, x_{i+1}]} f(x)
+    \end{align*} Then, since $f$ is uniformly continuous, $\exists \delta > 0$ such that $|f(x) - f(y)| < \varepsilon/2(b-a)$ for all $x, y \in [a, b]$ with $|x - y| < \delta$. Then, for $n > \delta^{-1}$, \begin{align*}
+        U(f, n) - L(f, n) &= \sum_{i=1}^n \frac{b-a}{n} \left[ \sup_{x \in [x_i, x_{i+1}]} f(x) - \inf_{x \in [x_i, x_{i+1}]} f(x) \right] \\
+        &= \sum_{i=1}^n \frac{b-a}{n} \sup_{x,y \in [x_i, x_{i+1}]} |f(x) - f(y)| \\
+        &\leq \sum_{i=1}^n \frac{b-a}{n} \frac{\varepsilon}{2(b-a)} \\
+        &= \sum_{i = 1}^n \frac{\varepsilon}{2n} = \frac{\varepsilon}{2} < \varepsilon
+    \end{align*} And so $f$ is integrable.
+\end{proof}
+
 \begin{thm}
-    Suppose $U \subseteq \reals^n$ is open. Then, there exists a sequence of compact sets $K_i \subseteq \reals^n$ such that $K_i \subseteq K_{i+1}$ for each $i \in \nats$ and $U = \bigcup_{i = 0}^{\infty} K_i$.
+    Suppose $U \subseteq \reals^n$ is open. Then, there exists a sequence of compact sets $K_i \subseteq \reals^n$ such that $K_i \subseteq K_{i+1}$ for each $i \in \nats$ and $U = \bigcup_{i = 0}^{\infty} K_i$. Such a sequence is called an exhuastion of $U$ by compact sets.
 \end{thm}
+\begin{proof}
+    For each $j \in \ints^+$ put $K_j = \{ x \in U \ | \ d(x, \reals^n \setminus U) \geq j^{-1} \} \cap \overline{B_j(0)}$. I leave as an exercise to check that this sequence exhausts $U$.
+\end{proof}
 
 \end{document}
