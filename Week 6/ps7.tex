@@ -1,0 +1,186 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usepackage{halloweenmath}
+\usetikzlibrary{shapes.geometric}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\ops}{\mathcal{L}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\q}{\mathbb{Q}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\ints}{\mathbb{Z}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\spann}{\text{span}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\proj}[2]{\text{proj}_{#1}(#2)}
+\newcommand{\makelarge}[1]{\mathlarger{\mathlarger{\mathlarger{#1}}}}
+\newcommand{\interior}{\text{int}}
+\newcommand{\boundary}{\text{bdry}}
+\newcommand{\cover}{\mathcal{O}}
+\newcommand{\g}[1]{\langle #1 \rangle}
+\newcommand{\ba}{\mathfrak{B}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\id}{\text{id}}
+\newcommand{\pf}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\grad}{\text{grad}}
+\newcommand{\curl}{\text{curl}}
+\newcommand{\divv}{\text{div}}
+\newcommand{\intsmod}[1]{\ints / #1 \ints}
+\newcommand{\bignorm}{\Bigg{|}\Bigg{|}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\im}{\text{im}}
+\newcommand{\coker}{\text{coker}}
+\newcommand{\ind}{\text{index}}
+
+\newcommand{\lref}[1]{\textbf{Lemma~\ref{#1}}}
+\newcommand{\tref}[1]{\textbf{Theorem~\ref{#1}}}
+
+\newcommand{\mdef}[3]{\text{mdef}_{(#1, #2)}(#3)}
+
+\usepackage[a4paper, total={6.1in, 8in}]{geometry}
+
+\newtheorem{defin}{Definition}
+\newtheorem{problem}{Problem}
+
+\author{Isaac Clark}
+\title{Problem Set 7}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Is there an uncountable collection of pairwise disjoint, open subsets of $\reals$?
+\end{problem}
+
+\begin{problem}
+    Suppose $A, B \subseteq \reals^n$. Show that $\overline{A \cup B} = \overline{A} \cup \overline{B}$.
+\end{problem}
+
+\begin{problem}
+    Show that $D \subseteq \reals^n$ is dense if and only if $\overline{D} = \reals^n$.
+\end{problem}
+
+\begin{problem}
+    Is it true that the intersection of dense sets is dense?
+\end{problem}
+
+\begin{problem}
+    Suppose $A \subseteq \reals^n$. Show that $x \in \interior(A)$ if and only if there exists an open neighbourhood, $U$, of $x$ which lies in $A$.
+\end{problem}
+
+\begin{problem}
+    Suppose $A \subseteq \reals^n$. Show that \begin{enumerate}
+        \item $A = \interior(A) \cup \partial (A)$.
+        \item $\overline{A} = A \cup \partial (A)$.
+        \item $\interior(A) = A \setminus \partial(A)$.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    For $A \subseteq \reals^n$, let $A^{\perp} = \reals^n \setminus \overline{A}$. Show that $\interior(\overline{A}) = A \iff (A^{\perp})^{\perp} = A$.
+\end{problem}
+
+\begin{problem}
+    Suppose $D \subseteq \reals^n$ is dense. Is $D \setminus \{x_1, ..., x_m\}$ also dense?
+\end{problem}
+
+\begin{problem}
+    Is the intersection of dense sets also dense? What about the intersection of dense, open sets? What about countably infinite intersections of dense, open sets?
+\end{problem}
+
+\begin{problem}
+    Show that the map $\reals \times \reals \to \reals$ given by $(x, y) \mapsto xy$ is continuous.
+\end{problem}
+
+\begin{problem}
+    Suppose $X \subseteq \reals^n$ and $Y \subseteq \reals^m$. Let $f: X \to Y$ be a bijection. Show that the following are equivalent: \begin{enumerate}
+        \item $f^{-1}$ is continuous.
+        \item $f$ is open.
+        \item $f$ is closed.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Suppose $A \subseteq \reals^n$ is closed. Show that there is a map $\chi: \reals^n \to \reals$ with: \begin{enumerate}
+        \item $\chi$ is continuous.
+        \item $\chi(x) = 0 \iff x \in A$.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Let $S^1 = \{ (x, y) \in \reals^2 \ | \ x^2 + y^2 = 1 \}$. Suppose $f: S^1 \to \reals$ is continuous. Show that there exists $z \in S^1$ such that $f(x, y) = f(-x, -y)$.
+\end{problem}
+
+\begin{problem}
+    Show that any open subset, $U$, of $\reals^n$ may be written as the countable union of connected, open subsets of $U$. Show this fails if $U$ is not open.
+\end{problem}
+
+\begin{problem}
+    Show that every polynomial with odd degree has a root.
+\end{problem}
+
+\begin{problem}
+    Show that a linear transformation from $\reals^n \to \reals^m$ is continuous if and only if there exists $M \geq 0$ such that $||Tv|| \leq M||v||$. Deduce that every linear transformation is continuous.
+\end{problem}
+
+\begin{problem}
+    Suppose $K \subseteq \reals^n$ is a non-empty compact subset, then there exists points in $K$ which achieve the minimum and maximum distance from $K$ to the origin. Show that if $C \subseteq \reals^n$ is closed, then there exists a point in $C$ which achieves the minimum distance to the origin, but there needn't be a point which attains the maximal distance.
+\end{problem}
+
+\begin{problem}
+    Consider the isomorphism from $\reals^{n^2} \to M_n(\reals)$ which associates a $n^2$ tuple of real numbers to a real-valued $n \times n$ matrix. Show that: \begin{enumerate}
+        \item The maps $\reals^{n^2} \to \reals$ given by $M \mapsto \det(M)$ and $M \mapsto \tr(A)$ are continuous.
+        \item The set of invertible matrices are open and dense in $\reals^{n^2}$. \text{Hint:} For $B$ invertible, consider $p(t) = \det \big( (1-t)A + tB \big)$.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    Show that $\reals^n \setminus A$ is path-connected for $|A| < \infty$ and $n \geq 2$.
+\end{problem}
+
+\begin{problem}
+    Find a subspace $X \subseteq \reals^n$ and a subset $A \subseteq X$ which is closed in $X$ and bounded, but is not compact. Why doesn't this contradict Heine-Borel?
+\end{problem}
+
+\begin{problem}
+    Show that $X \subseteq \reals^n$ is connected if and only if $X \times \reals$ is connected.
+\end{problem}
+
+\begin{defin}
+    Suppose $X \subseteq \reals^n$. We say that $\mathcal{B}$ is a basis for the topology on $X$ if: \begin{enumerate}
+        \item If $B_1, B_2 \in \mathcal{B}$ then $B_1 \cap B_2 = \bigcup_{i\in I} B_i$ for some $I$ and $B_i \in \mathcal{B}$.
+        \item Every open subset of $X$ is equal to $\bigcup_{i\in I} B_i$ for some $I$ and $B_i \in \mathcal{B}$.
+    \end{enumerate}
+\end{defin}
+
+\begin{problem}
+    Show that $\mathcal{B} = \{ (a, b) \ | \ a < b \in \reals \}$ and $\mathcal{B}' = \{ (a, b) \ | \ a < b \in \q\}$ are each a basis for the topology on $\reals$.
+\end{problem}
+
+\begin{problem}
+    Show that $\mathcal{B} = \{ \{x\} \ | \ x \in X \}$ is a basis for a topology on $X$ if and only if $X$ is discrete. If $X$ is finite, is there a basis with fewer than $|X|$ elements?
+\end{problem}
+
+\end{document}
